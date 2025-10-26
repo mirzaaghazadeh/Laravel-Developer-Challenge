@@ -152,6 +152,12 @@ class Level2Controller extends Controller
 
         FlagService::logFlagSubmission($challengeId, $flag, $isValid);
 
+        // Update progress if flag is valid
+        if ($isValid) {
+            $progressController = new \App\Http\Controllers\API\ProgressController();
+            $progressController->updateProgress($request);
+        }
+
         return response()->json([
             'success' => $isValid,
             'message' => $isValid ? 'Flag is correct!' : 'Flag is incorrect. Keep trying!',

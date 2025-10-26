@@ -35,26 +35,26 @@
             <!-- Level 1 -->
             <div class="border rounded-lg p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold">Level 1: PHP Logic & Debugging</h3>
-                    <span class="text-sm bg-gray-200 px-3 py-1 rounded-full">0/4 completed</span>
+                    <h3 class="text-lg font-semibold">Level 1: PHP Logic & Debugging <span id="level1-status">❌</span></h3>
+                    <span class="text-sm bg-gray-200 px-3 py-1 rounded-full" id="level1-counter">0/4 completed</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
-                    <div class="bg-green-600 h-3 rounded-full" style="width: 0%"></div>
+                    <div class="bg-green-600 h-3 rounded-full" id="level1-progress" style="width: 0%"></div>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="level1-challenges">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="1">
                         <div class="text-xs text-gray-600">Array Function</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="2">
                         <div class="text-xs text-gray-600">String Manipulation</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="3">
                         <div class="text-xs text-gray-600">Factorial</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="4">
                         <div class="text-xs text-gray-600">Caesar Cipher</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
@@ -64,11 +64,11 @@
             <!-- Level 2 -->
             <div class="border rounded-lg p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold">Level 2: Laravel API & Database</h3>
-                    <span class="text-sm bg-gray-200 px-3 py-1 rounded-full">0/6 completed</span>
+                    <h3 class="text-lg font-semibold">Level 2: Laravel API & Database <span id="level2-status">❌</span></h3>
+                    <span class="text-sm bg-gray-200 px-3 py-1 rounded-full" id="level2-counter">0/6 completed</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
-                    <div class="bg-yellow-600 h-3 rounded-full" style="width: 0%"></div>
+                    <div class="bg-yellow-600 h-3 rounded-full" id="level2-progress" style="width: 0%"></div>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="level2-challenges">
                     <div class="text-center p-3 bg-gray-100 rounded" data-challenge="5">
@@ -101,11 +101,11 @@
             <!-- Level 3 -->
             <div class="border rounded-lg p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold">Level 3: Advanced Laravel</h3>
-                    <span class="text-sm bg-gray-200 px-3 py-1 rounded-full">0/7 completed</span>
+                    <h3 class="text-lg font-semibold">Level 3: Advanced Laravel <span id="level3-status">❌</span></h3>
+                    <span class="text-sm bg-gray-200 px-3 py-1 rounded-full" id="level3-counter">0/7 completed</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
-                    <div class="bg-red-600 h-3 rounded-full" style="width: 0%"></div>
+                    <div class="bg-red-600 h-3 rounded-full" id="level3-progress" style="width: 0%"></div>
                 </div>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="level3-challenges">
                     <div class="text-center p-3 bg-gray-100 rounded" data-challenge="11">
@@ -179,34 +179,6 @@
             </div>
         </div>
 
-        <!-- Time Tracking -->
-        <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
-            <h2 class="text-xl font-semibold text-gray-800 mb-4">⏱️ Time Tracking</h2>
-            <div class="grid md:grid-cols-3 gap-4">
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-gray-600">00:00</div>
-                    <div class="text-sm text-gray-700">Time Elapsed</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-gray-600">30:00</div>
-                    <div class="text-sm text-gray-700">Time Limit</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-2xl font-bold text-gray-600">30:00</div>
-                    <div class="text-sm text-gray-700">Time Remaining</div>
-                </div>
-            </div>
-            <div class="mt-4">
-                <div class="flex justify-between text-sm mb-1">
-                    <span>Time Progress</span>
-                    <span>0%</span>
-                </div>
-                <div class="w-full bg-gray-200 rounded-full h-3">
-                    <div class="bg-gray-600 h-3 rounded-full" style="width: 0%"></div>
-                </div>
-            </div>
-        </div>
-
         <!-- Action Buttons -->
         <div class="mt-8 flex justify-center space-x-4">
             <a href="/dashboard" class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700">
@@ -220,31 +192,6 @@
 </div>
 
 <script>
-function resetProgress() {
-    if (confirm('Are you sure you want to reset all progress? This will clear all completed challenges and found flags.')) {
-        // In a real implementation, this would make an API call to reset progress
-        showNotification('Progress reset successfully!', 'success');
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
-    }
-}
-
-// Update time tracking (in a real implementation, this would sync with server)
-let startTime = Date.now();
-setInterval(() => {
-    const elapsed = Math.floor((Date.now() - startTime) / 1000);
-    const minutes = Math.floor(elapsed / 60);
-    const seconds = elapsed % 60;
-    const remaining = Math.max(0, 1800 - elapsed); // 30 minutes in seconds
-    const remainingMinutes = Math.floor(remaining / 60);
-    const remainingSeconds = remaining % 60;
-    
-    // Update display (would need to add IDs to the HTML elements)
-    console.log(`Time: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')} | Remaining: ${remainingMinutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`);
-}, 1000);
-</script>
-@endsection
 // Load and display progress
 function loadProgress() {
     axios.get('/api/progress')
@@ -268,6 +215,19 @@ function updateProgressDisplay(progress) {
     document.getElementById('level2-status').textContent = progress.level2_completed ? '✅' : '❌';
     document.getElementById('level3-status').textContent = progress.level3_completed ? '✅' : '❌';
     
+    // Update level counters and progress bars
+    const level1Count = progress.completed_challenges.filter(id => id >= 1 && id <= 4).length;
+    const level2Count = progress.completed_challenges.filter(id => id >= 5 && id <= 10).length;
+    const level3Count = progress.completed_challenges.filter(id => id >= 11 && id <= 17).length;
+    
+    document.getElementById('level1-counter').textContent = `${level1Count}/4 completed`;
+    document.getElementById('level2-counter').textContent = `${level2Count}/6 completed`;
+    document.getElementById('level3-counter').textContent = `${level3Count}/7 completed`;
+    
+    document.getElementById('level1-progress').style.width = `${(level1Count / 4) * 100}%`;
+    document.getElementById('level2-progress').style.width = `${(level2Count / 6) * 100}%`;
+    document.getElementById('level3-progress').style.width = `${(level3Count / 7) * 100}%`;
+    
     // Update individual challenge status
     progress.completed_challenges.forEach(challengeId => {
         const challengeElement = document.querySelector(`[data-challenge="${challengeId}"]`);
@@ -283,46 +243,38 @@ function updateProgressDisplay(progress) {
     
     // Update found flags display
     const flagsContainer = document.getElementById('found-flags');
-    if (flagsContainer && progress.found_flags.length > 0) {
-        flagsContainer.innerHTML = progress.found_flags.map(flag => 
-            `<div class="text-sm text-green-600">${flag}</div>`
-        ).join('');
+    if (flagsContainer && progress.found_flags && progress.found_flags.length > 0) {
+        const level1Flags = progress.found_flags.filter(f => f.includes('FLAG_1_'));
+        if (level1Flags.length > 0) {
+            flagsContainer.innerHTML = level1Flags.map(flag => 
+                `<div class="text-sm text-green-600 font-mono">${flag}</div>`
+            ).join('');
+        }
     }
 }
 
-// Update progress when flag is submitted
-function updateProgressOnFlagSubmit(challengeId, flag) {
-    axios.post('/api/progress/update', {
-        challenge_id: challengeId,
-        flag: flag
-    })
-    .then(response => {
-        updateProgressDisplay(response.data);
-        showNotification('Progress updated!', 'success');
-    })
-    .catch(error => {
-        console.error('Error updating progress:', error);
-        showNotification('Error updating progress', 'error');
-    });
+function resetProgress() {
+    if (confirm('Are you sure you want to reset all progress? This will clear all completed challenges and found flags.')) {
+        axios.post('/api/progress/reset')
+            .then(response => {
+                showNotification('Progress reset successfully!', 'success');
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1000);
+            })
+            .catch(error => {
+                console.error('Error resetting progress:', error);
+                showNotification('Error resetting progress', 'error');
+            });
+    }
 }
 
 // Load progress on page load
 document.addEventListener('DOMContentLoaded', function() {
     loadProgress();
     
-    // Update submit flag functions to also update progress
-    const originalSubmitFlag = window.submitFlag;
-    window.submitFlag = function(challengeId, flag, callback) {
-        originalSubmitFlag(challengeId, flag, function(response) {
-            if (callback) callback(response);
-            else {
-                if (response.success) {
-                    showNotification('Flag submitted successfully!', 'success');
-                    updateProgressOnFlagSubmit(challengeId, flag);
-                } else {
-                    showNotification('Incorrect flag. Keep trying!', 'error');
-                }
-            }
-        });
-    };
+    // Refresh progress every 5 seconds
+    setInterval(loadProgress, 5000);
 });
+</script>
+@endsection

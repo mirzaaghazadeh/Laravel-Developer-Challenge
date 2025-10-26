@@ -35,10 +35,10 @@
                 <div class="mt-4">
                     <div class="flex justify-between text-sm mb-1">
                         <span>Progress</span>
-                        <span>0/4</span>
+                        <span id="level1-progress-text">0/4</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-green-600 h-2 rounded-full" style="width: 0%"></div>
+                        <div class="bg-green-600 h-2 rounded-full" id="level1-progress-bar" style="width: 0%"></div>
                     </div>
                 </div>
                 
@@ -82,10 +82,10 @@
                 <div class="mt-4">
                     <div class="flex justify-between text-sm mb-1">
                         <span>Progress</span>
-                        <span>0/6</span>
+                        <span id="level2-progress-text">0/6</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-yellow-600 h-2 rounded-full" style="width: 0%"></div>
+                        <div class="bg-yellow-600 h-2 rounded-full" id="level2-progress-bar" style="width: 0%"></div>
                     </div>
                 </div>
                 
@@ -133,10 +133,10 @@
                 <div class="mt-4">
                     <div class="flex justify-between text-sm mb-1">
                         <span>Progress</span>
-                        <span>0/7</span>
+                        <span id="level3-progress-text">0/7</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-2">
-                        <div class="bg-red-600 h-2 rounded-full" style="width: 0%"></div>
+                        <div class="bg-red-600 h-2 rounded-full" id="level3-progress-bar" style="width: 0%"></div>
                     </div>
                 </div>
                 
@@ -151,15 +151,15 @@
             <h3 class="text-xl font-semibold text-blue-800 mb-4">Overall Progress</h3>
             <div class="grid md:grid-cols-3 gap-4">
                 <div class="text-center">
-                    <div class="text-3xl font-bold text-blue-600">0/17</div>
+                    <div class="text-3xl font-bold text-blue-600" id="overall-completed">0/17</div>
                     <div class="text-sm text-blue-700">Challenges Completed</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-3xl font-bold text-blue-600">0</div>
+                    <div class="text-3xl font-bold text-blue-600" id="overall-flags">0</div>
                     <div class="text-sm text-blue-700">Flags Found</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-3xl font-bold text-blue-600">0%</div>
+                    <div class="text-3xl font-bold text-blue-600" id="overall-percentage">0%</div>
                     <div class="text-sm text-blue-700">Total Progress</div>
                 </div>
             </div>
@@ -167,10 +167,10 @@
             <div class="mt-4">
                 <div class="flex justify-between text-sm mb-1">
                     <span>Overall Completion</span>
-                    <span>0%</span>
+                    <span id="overall-percentage-text">0%</span>
                 </div>
                 <div class="w-full bg-gray-200 rounded-full h-3">
-                    <div class="bg-blue-600 h-3 rounded-full" style="width: 0%"></div>
+                    <div class="bg-blue-600 h-3 rounded-full" id="overall-progress-bar" style="width: 0%"></div>
                 </div>
             </div>
         </div>
@@ -201,4 +201,55 @@
         </div>
     </div>
 </div>
+
+<script>
+// Load and display progress on dashboard
+function loadDashboardProgress() {
+    axios.get('/api/progress')
+        .then(response => {
+            const progress = response.data;
+            updateDashboardDisplay(progress);
+        })
+        .catch(error => {
+            console.error('Error loading progress:', error);
+        });
+}
+
+// Update dashboard display with progress data
+function updateDashboardDisplay(progress) {
+    // Calculate level progress
+    const level1Count = progress.completed_challenges.filter(id => id >= 1 && id <= 4).length;
+    const level2Count = progress.completed_challenges.filter(id => id >= 5 && id <= 10).length;
+    const level3Count = progress.completed_challenges.filter(id => id >= 11 && id <= 17).length;
+    
+    // Update Level 1
+    document.getElementById('level1-progress-text').textContent = `${level1Count}/4`;
+    document.getElementById('level1-progress-bar').style.width = `${(level1Count / 4) * 100}%`;
+    
+    // Update Level 2
+    document.getElementById('level2-progress-text').textContent = `${level2Count}/6`;
+    document.getElementById('level2-progress-bar').style.width = `${(level2Count / 6) * 100}%`;
+    
+    // Update Level 3
+    document.getElementById('level3-progress-text').textContent = `${level3Count}/7`;
+    document.getElementById('level3-progress-bar').style.width = `${(level3Count / 7) * 100}%`;
+    
+    // Update Overall Progress
+    const totalPercentage = Math.round((progress.total_completed / progress.total_challenges) * 100);
+    
+    document.getElementById('overall-completed').textContent = `${progress.total_completed}/${progress.total_challenges}`;
+    document.getElementById('overall-flags').textContent = progress.found_flags ? progress.found_flags.length : 0;
+    document.getElementById('overall-percentage').textContent = `${totalPercentage}%`;
+    document.getElementById('overall-percentage-text').textContent = `${totalPercentage}%`;
+    document.getElementById('overall-progress-bar').style.width = `${totalPercentage}%`;
+}
+
+// Load progress on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadDashboardProgress();
+    
+    // Refresh progress every 5 seconds
+    setInterval(loadDashboardProgress, 5000);
+});
+</script>
 @endsection

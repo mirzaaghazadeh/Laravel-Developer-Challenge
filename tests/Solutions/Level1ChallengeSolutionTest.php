@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Solutions;
 
 use App\Challenges\Level1\PHPLogicChallenge;
 use Tests\TestCase;
 
-class Level1ChallengeTest extends TestCase
+class Level1ChallengeSolutionTest extends TestCase
 {
     /** @test */
     public function it_can_sum_even_numbers_correctly()

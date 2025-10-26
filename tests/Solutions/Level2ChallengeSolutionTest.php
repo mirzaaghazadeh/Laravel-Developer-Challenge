@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Unit;
+namespace Tests\Solutions;
 
 use App\Challenges\Level2\LaravelAPIChallenge;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\DB;
 use Tests\TestCase;
 
-class Level2ChallengeTest extends TestCase
+class Level2ChallengeSolutionTest extends TestCase
 {
     use RefreshDatabase;
 
