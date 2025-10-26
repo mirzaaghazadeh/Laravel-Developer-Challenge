@@ -2,13 +2,12 @@
 
 namespace App\Challenges\Level3;
 
-use Illuminate\Support\Facades\Queue;
-use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\DB;
-use App\Jobs\ProcessDataJob;
 use App\Events\DataProcessedEvent;
+use App\Jobs\ProcessDataJob;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Queue;
 
 class AdvancedLaravelChallenge
 {
@@ -23,19 +22,19 @@ class AdvancedLaravelChallenge
             // This should be dispatched to queue, not processed synchronously
             $job = new ProcessDataJob($data);
             $job->handle(); // Bug: Processing synchronously instead of queuing
-            
+
             return [
                 'success' => true,
                 'message' => 'Job processed',
                 'data' => $data,
-                'flag' => 'FLAG_3_QUEUE_' . substr(md5(json_encode($data)), 0, 8)
+                'flag' => 'FLAG_3_QUEUE_'.substr(md5(json_encode($data)), 0, 8),
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
                 'error' => $e->getMessage(),
                 'hint' => 'Jobs should be queued, not processed immediately',
-                'data' => $data
+                'data' => $data,
             ];
         }
     }
@@ -49,16 +48,16 @@ class AdvancedLaravelChallenge
         // Bug: Event is not properly fired or listened to
         $eventFired = false;
         $listenerExecuted = false;
-        
+
         // Mock listener
         Event::listen(DataProcessedEvent::class, function ($event) use (&$listenerExecuted) {
             $listenerExecuted = true;
         });
-        
+
         // Fire event
         Event::dispatch(new DataProcessedEvent($payload));
         $eventFired = true;
-        
+
         // Check if everything worked correctly
         if ($eventFired && $listenerExecuted) {
             return [
@@ -66,17 +65,17 @@ class AdvancedLaravelChallenge
                 'message' => 'Event system working',
                 'result' => [
                     'event_fired' => $eventFired,
-                    'listener_executed' => $listenerExecuted
+                    'listener_executed' => $listenerExecuted,
                 ],
-                'flag' => 'FLAG_3_EVENT_' . substr(md5(json_encode($payload)), 0, 8)
+                'flag' => 'FLAG_3_EVENT_'.substr(md5(json_encode($payload)), 0, 8),
             ];
         }
-        
+
         return [
             'success' => false,
             'error' => 'Event system not working properly',
             'event_fired' => $eventFired,
-            'listener_executed' => $listenerExecuted
+            'listener_executed' => $listenerExecuted,
         ];
     }
 
@@ -87,7 +86,7 @@ class AdvancedLaravelChallenge
     public static function collectionChallenge(array $data): array
     {
         $collection = collect($data);
-        
+
         // Bug: Inefficient collection operations
         $result = $collection
             ->filter(function ($item) {
@@ -95,40 +94,41 @@ class AdvancedLaravelChallenge
             })
             ->map(function ($item) {
                 $item['score'] = ($item['score'] ?? 0) * 2;
+
                 return $item;
             })
             ->sortByDesc('score')
             ->take(5)
             ->values();
-        
+
         // Hidden flag in collection analysis
         $totalScore = $result->sum('score');
         $avgScore = $result->avg('score');
-        
+
         $stats = [
             'total_score' => $totalScore,
             'average_score' => $avgScore,
-            'count' => $result->count()
+            'count' => $result->count(),
         ];
-        
+
         if ($result->count() >= 3 && $avgScore > 50) {
             return [
                 'success' => true,
                 'result' => [
                     'data' => $result->toArray(),
-                    'stats' => $stats
+                    'stats' => $stats,
                 ],
-                'flag' => 'FLAG_3_COLLECTION_' . substr(md5($totalScore), 0, 8)
+                'flag' => 'FLAG_3_COLLECTION_'.substr(md5($totalScore), 0, 8),
             ];
         }
-        
+
         return [
             'success' => false,
             'result' => [
                 'data' => $result->toArray(),
-                'stats' => $stats
+                'stats' => $stats,
             ],
-            'hint' => 'Need at least 3 active items with average score > 50'
+            'hint' => 'Need at least 3 active items with average score > 50',
         ];
     }
 
@@ -142,25 +142,25 @@ class AdvancedLaravelChallenge
         try {
             // This should use proper dependency injection
             $service = app()->make(\App\Services\DataProcessingService::class);
-            
-            if (!$service) {
+
+            if (! $service) {
                 throw new \Exception('Service not resolved');
             }
-            
+
             $result = $service->process(['test' => 'data']);
-            
+
             return [
                 'success' => true,
                 'result' => $result,
-                'flag' => 'FLAG_3_CONTAINER_' . substr(md5(get_class($service)), 0, 8)
+                'flag' => 'FLAG_3_CONTAINER_'.substr(md5(get_class($service)), 0, 8),
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
                 'result' => [
-                    'error' => $e->getMessage()
+                    'error' => $e->getMessage(),
                 ],
-                'hint' => 'Check if the service is properly registered in the container'
+                'hint' => 'Check if the service is properly registered in the container',
             ];
         }
     }
@@ -173,44 +173,44 @@ class AdvancedLaravelChallenge
     {
         // Simulate test scenarios
         $results = [];
-        
+
         // Test 1: Array assertion
         $results['test1'] = [
             'expected' => 'assertArrayHasKey',
             'actual' => array_key_exists('id', $testData),
-            'passed' => array_key_exists('id', $testData)
+            'passed' => array_key_exists('id', $testData),
         ];
-        
+
         // Test 2: Type assertion
         $results['test2'] = [
             'expected' => 'assertIsInt',
             'actual' => is_int($testData['count'] ?? null),
-            'passed' => is_int($testData['count'] ?? null)
+            'passed' => is_int($testData['count'] ?? null),
         ];
-        
+
         // Test 3: Value assertion
         $results['test3'] = [
             'expected' => 'assertEquals',
             'actual' => ($testData['status'] ?? '') === 'active',
-            'passed' => ($testData['status'] ?? '') === 'active'
+            'passed' => ($testData['status'] ?? '') === 'active',
         ];
-        
-        $allPassed = collect($results)->every(fn($test) => $test['passed']);
-        
+
+        $allPassed = collect($results)->every(fn ($test) => $test['passed']);
+
         if ($allPassed) {
             return [
                 'success' => true,
                 'tests' => $results,
-                'flag' => 'FLAG_3_TESTING_' . substr(md5(json_encode($testData)), 0, 8)
+                'flag' => 'FLAG_3_TESTING_'.substr(md5(json_encode($testData)), 0, 8),
             ];
         }
-        
+
         return [
             'success' => false,
             'result' => [
-                'tests' => $results
+                'tests' => $results,
             ],
-            'hint' => 'All tests must pass to get the flag'
+            'hint' => 'All tests must pass to get the flag',
         ];
     }
 
@@ -228,7 +228,7 @@ class AdvancedLaravelChallenge
                     'users.name',
                     'users.email',
                     DB::raw('COUNT(posts.id) as posts_count'),
-                    DB::raw('AVG(comments.rating) as avg_rating')
+                    DB::raw('AVG(comments.rating) as avg_rating'),
                 ])
                 ->leftJoin('posts', 'users.id', '=', 'posts.user_id')
                 ->leftJoin('comments', 'posts.id', '=', 'comments.post_id')
@@ -237,27 +237,27 @@ class AdvancedLaravelChallenge
                 ->orderByDesc('posts_count')
                 ->limit(10)
                 ->get();
-            
+
             if ($results->count() > 0) {
                 return [
                     'success' => true,
                     'results' => $results,
-                    'flag' => 'FLAG_3_QUERY_' . substr(md5($results->count()), 0, 8)
+                    'flag' => 'FLAG_3_QUERY_'.substr(md5($results->count()), 0, 8),
                 ];
             }
-            
+
             return [
                 'success' => false,
                 'result' => [
-                    'error' => 'No results found'
+                    'error' => 'No results found',
                 ],
-                'hint' => 'Query should return users with posts and their average comment ratings'
+                'hint' => 'Query should return users with posts and their average comment ratings',
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
                 'error' => $e->getMessage(),
-                'hint' => 'Check the SQL syntax and joins'
+                'hint' => 'Check the SQL syntax and joins',
             ];
         }
     }
@@ -270,63 +270,67 @@ class AdvancedLaravelChallenge
     {
         // Simulate middleware pipeline
         $pipeline = [
-            'authentication' => function($req) {
+            'authentication' => function ($req) {
                 return isset($req['token']) ? $req : null;
             },
-            'authorization' => function($req) {
+            'authorization' => function ($req) {
                 return ($req['role'] ?? 'guest') === 'admin' ? $req : null;
             },
-            'validation' => function($req) {
+            'validation' => function ($req) {
                 return isset($req['data']) ? $req : null;
             },
-            'sanitization' => function($req) {
+            'sanitization' => function ($req) {
                 // Sanitize input data
                 if (isset($req['data'])) {
-                    $req['data'] = array_map('trim', (array)$req['data']);
+                    $req['data'] = array_map('trim', (array) $req['data']);
                 }
+
                 return $req;
             },
-            'rate_limiting' => function($req) {
+            'rate_limiting' => function ($req) {
                 // Simulate rate limiting check
                 $req['rate_limited'] = false;
+
                 return $req;
             },
-            'logging' => function($req) {
+            'logging' => function ($req) {
                 // Log the request
                 $req['logged'] = true;
+
                 return $req;
             },
-            'processing' => function($req) {
+            'processing' => function ($req) {
                 $req['processed'] = true;
                 $req['timestamp'] = now()->timestamp;
+
                 return $req;
-            }
+            },
         ];
-        
+
         $result = $request;
         $executed = [];
-        
+
         foreach ($pipeline as $name => $middleware) {
             $result = $middleware($result);
             $executed[] = $name;
-            
+
             if ($result === null) {
                 return [
                     'success' => false,
                     'failed_at' => $name,
                     'executed' => $executed,
-                    'hint' => "Middleware '{$name}' failed. Check the request format."
+                    'hint' => "Middleware '{$name}' failed. Check the request format.",
                 ];
             }
         }
-        
+
         return [
             'success' => true,
             'result' => [
                 'data' => $result,
-                'executed' => $executed
+                'executed' => $executed,
             ],
-            'flag' => 'FLAG_3_MIDDLEWARE_' . substr(md5(implode(',', $executed)), 0, 8)
+            'flag' => 'FLAG_3_MIDDLEWARE_'.substr(md5(implode(',', $executed)), 0, 8),
         ];
     }
 }

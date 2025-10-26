@@ -14,7 +14,9 @@ class ProcessDataJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     public $data;
+
     public $tries = 3;
+
     public $timeout = 30;
 
     /**
@@ -32,14 +34,14 @@ class ProcessDataJob implements ShouldQueue
     {
         // Simulate data processing
         Log::info('Processing data job', ['data' => $this->data]);
-        
+
         // Simulate some processing time
         usleep(100000); // 0.1 second
-        
+
         // Add processing metadata
         $this->data['processed_at'] = now()->toISOString();
         $this->data['job_id'] = $this->job ? $this->job->getJobId() : null;
-        
+
         Log::info('Data processed successfully', ['result' => $this->data]);
     }
 
@@ -50,7 +52,7 @@ class ProcessDataJob implements ShouldQueue
     {
         Log::error('Data processing job failed', [
             'data' => $this->data,
-            'error' => $exception->getMessage()
+            'error' => $exception->getMessage(),
         ]);
     }
 }

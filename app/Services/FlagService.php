@@ -30,6 +30,7 @@ class FlagService
     {
         $timestamp = now()->timestamp;
         $random = mt_rand(1000, 9999);
+
         return "FLAG_{$level}_{$challengeName}_{$timestamp}_{$random}";
     }
 
@@ -42,7 +43,7 @@ class FlagService
             'challenge_id' => $challengeId,
             'submitted_flag' => $submittedFlag,
             'is_correct' => $isCorrect,
-            'timestamp' => now()->toISOString()
+            'timestamp' => now()->toISOString(),
         ]);
     }
 
@@ -55,19 +56,20 @@ class FlagService
         if ($length <= 8) {
             return str_repeat('*', $length);
         }
-        
+
         // For flags that start with FLAG_, keep the FLAG_ prefix
         if (strpos($flag, 'FLAG_') === 0) {
             $start = 'FLAG_';
             $end = substr($flag, -3);
             $middle = str_repeat('*', $length - strlen($start) - strlen($end));
-            return $start . $middle . $end;
+
+            return $start.$middle.$end;
         }
-        
+
         $start = substr($flag, 0, 3);
         $end = substr($flag, -3);
         $middle = str_repeat('*', $length - 6);
-        
-        return $start . $middle . $end;
+
+        return $start.$middle.$end;
     }
 }

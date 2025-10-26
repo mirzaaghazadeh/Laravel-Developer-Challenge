@@ -2,11 +2,8 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
@@ -16,6 +13,7 @@ class DataProcessedEvent
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $data;
+
     public $timestamp;
 
     /**
@@ -25,7 +23,7 @@ class DataProcessedEvent
     {
         $this->data = $data;
         $this->timestamp = now()->timestamp;
-        
+
         Log::info('DataProcessedEvent fired', ['data' => $data]);
     }
 
@@ -57,7 +55,7 @@ class DataProcessedEvent
         return [
             'data' => $this->data,
             'timestamp' => $this->timestamp,
-            'message' => 'Data has been processed successfully'
+            'message' => 'Data has been processed successfully',
         ];
     }
 }

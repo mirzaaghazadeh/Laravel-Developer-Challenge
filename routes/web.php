@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Challenges\ChallengeController;
 use App\Http\Controllers\Challenges\Level1Controller;
 use App\Http\Controllers\Challenges\Level2Controller;
 use App\Http\Controllers\Challenges\Level3Controller;
+use Illuminate\Support\Facades\Route;
 
 // Main challenge routes
 Route::get('/', [ChallengeController::class, 'index']);

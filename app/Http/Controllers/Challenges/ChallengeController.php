@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Challenges;
 
 use App\Http\Controllers\Controller;
 use App\Models\Challenge;
-use Illuminate\Http\Request;
 
 class ChallengeController extends Controller
 {
@@ -12,17 +11,17 @@ class ChallengeController extends Controller
     {
         return view('challenges.index', [
             'title' => 'Laravel Developer Challenge',
-            'description' => 'Test your Laravel and PHP skills with our 3-level challenge system'
+            'description' => 'Test your Laravel and PHP skills with our 3-level challenge system',
         ]);
     }
 
     public function dashboard()
     {
         $challenges = Challenge::where('is_active', true)->get()->groupBy('level');
-        
+
         return view('challenges.dashboard', [
             'title' => 'Challenge Dashboard',
-            'challenges' => $challenges
+            'challenges' => $challenges,
         ]);
     }
 
@@ -35,8 +34,8 @@ class ChallengeController extends Controller
             'completed_levels' => [
                 1 => false,
                 2 => false,
-                3 => false
-            ]
+                3 => false,
+            ],
         ]);
     }
 }

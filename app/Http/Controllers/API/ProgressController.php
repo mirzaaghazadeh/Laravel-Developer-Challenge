@@ -22,7 +22,7 @@ class ProgressController extends Controller
             'level2_completed' => false,
             'level3_completed' => false,
             'total_completed' => 0,
-            'total_challenges' => 17
+            'total_challenges' => 17,
         ]);
 
         return response()->json($progress);
@@ -35,7 +35,7 @@ class ProgressController extends Controller
     {
         $challengeId = $request->input('challenge_id');
         $flag = $request->input('flag');
-        
+
         $progress = Cache::get('challenge_progress', [
             'completed_challenges' => [],
             'found_flags' => [],
@@ -43,24 +43,24 @@ class ProgressController extends Controller
             'level2_completed' => false,
             'level3_completed' => false,
             'total_completed' => 0,
-            'total_challenges' => 17
+            'total_challenges' => 17,
         ]);
 
         // Add to completed challenges if not already there
-        if (!in_array($challengeId, $progress['completed_challenges'])) {
+        if (! in_array($challengeId, $progress['completed_challenges'])) {
             $progress['completed_challenges'][] = $challengeId;
             $progress['found_flags'][] = $flag;
             $progress['total_completed']++;
 
             // Update level completion status
             if ($challengeId <= 4) {
-                $level1Completed = count(array_filter($progress['completed_challenges'], fn($id) => $id <= 4)) === 4;
+                $level1Completed = count(array_filter($progress['completed_challenges'], fn ($id) => $id <= 4)) === 4;
                 $progress['level1_completed'] = $level1Completed;
             } elseif ($challengeId <= 10) {
-                $level2Completed = count(array_filter($progress['completed_challenges'], fn($id) => $id > 4 && $id <= 10)) === 6;
+                $level2Completed = count(array_filter($progress['completed_challenges'], fn ($id) => $id > 4 && $id <= 10)) === 6;
                 $progress['level2_completed'] = $level2Completed;
             } else {
-                $level3Completed = count(array_filter($progress['completed_challenges'], fn($id) => $id > 10)) === 7;
+                $level3Completed = count(array_filter($progress['completed_challenges'], fn ($id) => $id > 10)) === 7;
                 $progress['level3_completed'] = $level3Completed;
             }
 
@@ -76,6 +76,7 @@ class ProgressController extends Controller
     public function resetProgress()
     {
         Cache::forget('challenge_progress');
+
         return response()->json(['message' => 'Progress reset successfully']);
     }
 }

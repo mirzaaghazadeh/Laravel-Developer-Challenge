@@ -2,25 +2,26 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use App\Challenges\Level2\LaravelAPIChallenge;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
+use Tests\TestCase;
 
 class Level2ChallengeTest extends TestCase
 {
     use RefreshDatabase;
+
     /** @test */
     public function it_validates_api_data_correctly()
     {
         $validData = [
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'age' => 25
+            'age' => 25,
         ];
-        
+
         $result = LaravelAPIChallenge::brokenValidation($validData);
-        
+
         $this->assertTrue($result['success']);
         $this->assertArrayHasKey('flag', $result);
     }
@@ -31,11 +32,11 @@ class Level2ChallengeTest extends TestCase
         $invalidData = [
             'name' => '', // Missing required field
             'email' => 'invalid-email', // Invalid email
-            'age' => 15 // Below minimum age
+            'age' => 15, // Below minimum age
         ];
-        
+
         $result = LaravelAPIChallenge::brokenValidation($invalidData);
-        
+
         $this->assertFalse($result['success']);
         $this->assertArrayHasKey('errors', $result);
     }
@@ -45,11 +46,11 @@ class Level2ChallengeTest extends TestCase
     {
         // Enable query log
         DB::enableQueryLog();
-        
+
         $result = LaravelAPIChallenge::brokenDatabaseQuery();
-        
+
         $queries = DB::getQueryLog();
-        
+
         // Should return flag when optimized (single query)
         $this->assertArrayHasKey('flag', $result);
         $this->assertLessThanOrEqual(2, count($queries));
@@ -58,10 +59,10 @@ class Level2ChallengeTest extends TestCase
     /** @test */
     public function it_implements_cache_strategy()
     {
-        $key = 'test_key_' . time();
-        
+        $key = 'test_key_'.time();
+
         $result = LaravelAPIChallenge::brokenCacheImplementation($key);
-        
+
         // Should return flag on first call (cache miss)
         $this->assertArrayHasKey('flag', $result);
         $this->assertEquals('database', $result['source']);
@@ -70,14 +71,14 @@ class Level2ChallengeTest extends TestCase
     /** @test */
     public function it_returns_cached_data_on_subsequent_calls()
     {
-        $key = 'test_key_' . time();
-        
+        $key = 'test_key_'.time();
+
         // First call - should cache
         $firstResult = LaravelAPIChallenge::brokenCacheImplementation($key);
-        
+
         // Second call - should return cached data
         $secondResult = LaravelAPIChallenge::brokenCacheImplementation($key);
-        
+
         $this->assertEquals('database', $firstResult['source']);
         $this->assertEquals('cache', $secondResult['source']);
     }
@@ -87,9 +88,9 @@ class Level2ChallengeTest extends TestCase
     {
         $items = range(1, 50);
         $page = 2;
-        
+
         $result = LaravelAPIChallenge::brokenAPIResponse($items, $page);
-        
+
         $this->assertArrayHasKey('data', $result);
         $this->assertArrayHasKey('pagination', $result);
         $this->assertEquals(10, count($result['data'])); // 10 items per page
@@ -100,7 +101,7 @@ class Level2ChallengeTest extends TestCase
     public function it_optimizes_relationship_queries()
     {
         $result = LaravelAPIChallenge::brokenRelationshipQuery();
-        
+
         // Should return flag when optimized (single query)
         $this->assertArrayHasKey('flag', $result);
         $this->assertLessThanOrEqual(1, $result['query_count']);
@@ -112,11 +113,11 @@ class Level2ChallengeTest extends TestCase
         $validRequest = [
             'api_key' => 'valid_api_key_12345',
             'role' => 'admin',
-            'timestamp' => time()
+            'timestamp' => time(),
         ];
-        
+
         $result = LaravelAPIChallenge::brokenMiddlewareLogic($validRequest);
-        
+
         $this->assertTrue($result['success']);
         $this->assertArrayHasKey('flag', $result);
     }
@@ -127,11 +128,11 @@ class Level2ChallengeTest extends TestCase
         $invalidRequest = [
             'api_key' => 'short', // Too short
             'role' => 'user', // Not admin
-            'timestamp' => time() - 400 // Expired
+            'timestamp' => time() - 400, // Expired
         ];
-        
+
         $result = LaravelAPIChallenge::brokenMiddlewareLogic($invalidRequest);
-        
+
         $this->assertFalse($result['success']);
         $this->assertArrayHasKey('error', $result);
     }

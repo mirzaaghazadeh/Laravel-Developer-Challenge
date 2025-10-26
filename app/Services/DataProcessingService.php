@@ -8,12 +8,13 @@ use Illuminate\Support\Facades\Validator;
 class DataProcessingService
 {
     private $processor;
+
     private $validator;
 
     public function __construct()
     {
-        $this->processor = new DataProcessor();
-        $this->validator = new DataValidator();
+        $this->processor = new DataProcessor;
+        $this->validator = new DataValidator;
     }
 
     /**
@@ -25,11 +26,11 @@ class DataProcessingService
 
         // Validate input data
         $validationResult = $this->validator->validate($data);
-        if (!$validationResult['valid']) {
+        if (! $validationResult['valid']) {
             return [
                 'success' => false,
                 'errors' => $validationResult['errors'],
-                'processed_at' => now()->toISOString()
+                'processed_at' => now()->toISOString(),
             ];
         }
 
@@ -41,7 +42,7 @@ class DataProcessingService
             'original_data' => $data,
             'processed_data' => $processedData,
             'processed_at' => now()->toISOString(),
-            'service' => 'DataProcessingService'
+            'service' => 'DataProcessingService',
         ];
     }
 
@@ -71,9 +72,9 @@ class DataProcessingService
             'summary' => [
                 'total' => count($dataSets),
                 'success' => $successCount,
-                'failure' => $failureCount
+                'failure' => $failureCount,
             ],
-            'processed_at' => now()->toISOString()
+            'processed_at' => now()->toISOString(),
         ];
     }
 }
@@ -89,7 +90,7 @@ class DataProcessor
         $data['transformed'] = true;
         $data['checksum'] = md5(json_encode($data));
         $data['size'] = strlen(json_encode($data));
-        
+
         // Transform numeric values
         foreach ($data as $key => $value) {
             if (is_numeric($value)) {
@@ -111,14 +112,14 @@ class DataValidator
         $rules = [
             'required_field' => 'required|string',
             'numeric_field' => 'nullable|numeric|min:0|max:100',
-            'email_field' => 'nullable|email'
+            'email_field' => 'nullable|email',
         ];
 
         $validator = Validator::make($data, $rules);
 
         return [
-            'valid' => !$validator->fails(),
-            'errors' => $validator->errors()->toArray()
+            'valid' => ! $validator->fails(),
+            'errors' => $validator->errors()->toArray(),
         ];
     }
 }

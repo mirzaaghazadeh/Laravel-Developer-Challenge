@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Challenges;
 
-use App\Http\Controllers\Controller;
 use App\Challenges\Level3\AdvancedLaravelChallenge;
+use App\Http\Controllers\Controller;
 use App\Services\FlagService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +14,7 @@ class Level3Controller extends Controller
     {
         return view('challenges.level3.index', [
             'title' => 'Level 3: Advanced Laravel & Testing',
-            'description' => 'Test your advanced Laravel skills including queues, events, testing, and architecture'
+            'description' => 'Test your advanced Laravel skills including queues, events, testing, and architecture',
         ]);
     }
 
@@ -25,16 +25,16 @@ class Level3Controller extends Controller
     {
         $data = $request->input('data', ['test' => 'queue_data']);
         $result = AdvancedLaravelChallenge::brokenQueueJob($data);
-        
+
         if ($result['flag']) {
             Log::info('Level 3 Queue Challenge Solved', ['data' => $data, 'flag' => $result['flag']]);
             FlagService::logFlagSubmission(11, $result['flag'], true);
         }
-        
+
         return response()->json([
             'input' => $data,
             'result' => $result,
-            'hint' => 'Jobs should be queued asynchronously, not processed immediately!'
+            'hint' => 'Jobs should be queued asynchronously, not processed immediately!',
         ]);
     }
 
@@ -45,16 +45,16 @@ class Level3Controller extends Controller
     {
         $payload = $request->input('payload', ['event' => 'test_data']);
         $result = AdvancedLaravelChallenge::brokenEventSystem($payload);
-        
+
         if ($result['flag']) {
             Log::info('Level 3 Event Challenge Solved', ['payload' => $payload, 'flag' => $result['flag']]);
             FlagService::logFlagSubmission(12, $result['flag'], true);
         }
-        
+
         return response()->json([
             'payload' => $payload,
             'result' => $result,
-            'hint' => 'Check if the event is properly fired and if listeners are registered correctly'
+            'hint' => 'Check if the event is properly fired and if listeners are registered correctly',
         ]);
     }
 
@@ -71,16 +71,16 @@ class Level3Controller extends Controller
             ['name' => 'Item 5', 'active' => true, 'score' => 60],
         ]);
         $result = AdvancedLaravelChallenge::collectionChallenge($data);
-        
+
         if ($result['flag']) {
             Log::info('Level 3 Collection Challenge Solved', ['data_count' => count($data), 'flag' => $result['flag']]);
             FlagService::logFlagSubmission(13, $result['flag'], true);
         }
-        
+
         return response()->json([
             'input_count' => count($data),
             'result' => $result,
-            'hint' => 'Need at least 3 active items with average score > 50 after processing'
+            'hint' => 'Need at least 3 active items with average score > 50 after processing',
         ]);
     }
 
@@ -90,15 +90,15 @@ class Level3Controller extends Controller
     public function serviceContainerChallenge()
     {
         $result = AdvancedLaravelChallenge::serviceContainerChallenge();
-        
+
         if ($result['flag']) {
             Log::info('Level 3 Service Container Challenge Solved', ['flag' => $result['flag']]);
             FlagService::logFlagSubmission(14, $result['flag'], true);
         }
-        
+
         return response()->json([
             'result' => $result,
-            'hint' => 'Check if the service is properly registered in Laravel\'s service container'
+            'hint' => 'Check if the service is properly registered in Laravel\'s service container',
         ]);
     }
 
@@ -110,19 +110,19 @@ class Level3Controller extends Controller
         $testData = $request->input('test_data', [
             'id' => 123,
             'count' => 42,
-            'status' => 'active'
+            'status' => 'active',
         ]);
         $result = AdvancedLaravelChallenge::testingChallenge($testData);
-        
+
         if ($result['flag']) {
             Log::info('Level 3 Testing Challenge Solved', ['test_data' => $testData, 'flag' => $result['flag']]);
             FlagService::logFlagSubmission(15, $result['flag'], true);
         }
-        
+
         return response()->json([
             'test_data' => $testData,
             'result' => $result,
-            'hint' => 'All test assertions must pass. Check the data structure carefully!'
+            'hint' => 'All test assertions must pass. Check the data structure carefully!',
         ]);
     }
 
@@ -132,15 +132,15 @@ class Level3Controller extends Controller
     public function queryBuilderChallenge()
     {
         $result = AdvancedLaravelChallenge::advancedQueryBuilderChallenge();
-        
+
         if ($result['flag']) {
             Log::info('Level 3 Query Builder Challenge Solved', ['flag' => $result['flag']]);
             FlagService::logFlagSubmission(16, $result['flag'], true);
         }
-        
+
         return response()->json([
             'result' => $result,
-            'hint' => 'Complex query with joins, aggregations, and proper grouping'
+            'hint' => 'Complex query with joins, aggregations, and proper grouping',
         ]);
     }
 
@@ -152,19 +152,19 @@ class Level3Controller extends Controller
         $requestData = $request->input('request', [
             'token' => 'valid_token_12345',
             'role' => 'admin',
-            'data' => ['test' => 'payload']
+            'data' => ['test' => 'payload'],
         ]);
         $result = AdvancedLaravelChallenge::middlewarePipelineChallenge($requestData);
-        
+
         if ($result['flag']) {
             Log::info('Level 3 Middleware Pipeline Challenge Solved', ['flag' => $result['flag']]);
             FlagService::logFlagSubmission(17, $result['flag'], true);
         }
-        
+
         return response()->json([
             'request' => $requestData,
             'result' => $result,
-            'hint' => 'Request must pass through all middleware stages: authentication, authorization, validation, processing'
+            'hint' => 'Request must pass through all middleware stages: authentication, authorization, validation, processing',
         ]);
     }
 
@@ -175,14 +175,14 @@ class Level3Controller extends Controller
     {
         $flag = $request->input('flag');
         $challengeId = $request->input('challenge_id');
-        
+
         $isValid = strpos($flag, 'FLAG_3_') !== false;
-        
+
         FlagService::logFlagSubmission($challengeId, $flag, $isValid);
-        
+
         return response()->json([
             'success' => $isValid,
-            'message' => $isValid ? 'Flag is correct!' : 'Flag is incorrect. Keep trying!'
+            'message' => $isValid ? 'Flag is correct!' : 'Flag is incorrect. Keep trying!',
         ]);
     }
 }

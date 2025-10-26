@@ -2,10 +2,10 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use App\Models\Challenge;
 use App\Services\FlagService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
 class ChallengeSystemTest extends TestCase
 {
@@ -93,14 +93,14 @@ class ChallengeSystemTest extends TestCase
     public function it_can_submit_level1_array_challenge()
     {
         $response = $this->post('/level1/array', [
-            'numbers' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+            'numbers' => [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         ]);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'numbers',
             'result',
-            'hint'
+            'hint',
         ]);
     }
 
@@ -108,14 +108,14 @@ class ChallengeSystemTest extends TestCase
     public function it_can_submit_level1_string_challenge()
     {
         $response = $this->post('/level1/string', [
-            'input' => 'GNIDOC_1_GALF_3_2_1'
+            'input' => 'GNIDOC_1_GALF_3_2_1',
         ]);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'input',
             'result',
-            'hint'
+            'hint',
         ]);
     }
 
@@ -124,14 +124,14 @@ class ChallengeSystemTest extends TestCase
     {
         $response = $this->post('/level1/factorial', [
             'n' => 5,
-            'answer' => 120
+            'answer' => 120,
         ]);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'n',
             'answer',
-            'result'
+            'result',
         ]);
     }
 
@@ -139,14 +139,14 @@ class ChallengeSystemTest extends TestCase
     public function it_can_submit_level1_decode_challenge()
     {
         $response = $this->post('/level1/decode', [
-            'input' => 'iodj_ghfrgh_iodj'
+            'input' => 'iodj_ghfrgh_iodj',
         ]);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'input',
             'result',
-            'hint'
+            'hint',
         ]);
     }
 
@@ -156,7 +156,7 @@ class ChallengeSystemTest extends TestCase
         $response = $this->post('/level2/validation', [
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'age' => 25
+            'age' => 25,
         ]);
 
         $response->assertStatus(200);
@@ -165,8 +165,8 @@ class ChallengeSystemTest extends TestCase
             'result' => [
                 'success',
                 'errors',
-                'flag'
-            ]
+                'flag',
+            ],
         ]);
     }
 
@@ -174,7 +174,7 @@ class ChallengeSystemTest extends TestCase
     public function it_can_submit_level2_cache_challenge()
     {
         $response = $this->post('/level2/cache', [
-            'key' => 'test_key_' . time()
+            'key' => 'test_key_'.time(),
         ]);
 
         $response->assertStatus(200);
@@ -182,8 +182,8 @@ class ChallengeSystemTest extends TestCase
             'key',
             'result' => [
                 'source',
-                'flag'
-            ]
+                'flag',
+            ],
         ]);
     }
 
@@ -191,20 +191,20 @@ class ChallengeSystemTest extends TestCase
     public function it_can_submit_level2_api_response_challenge()
     {
         $response = $this->post('/level2/api-response', [
-            'page' => 1
+            'page' => 1,
         ]);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'input' => [
                 'items_count',
-                'page'
+                'page',
             ],
             'result' => [
                 'data',
                 'pagination',
-                'flag'
-            ]
+                'flag',
+            ],
         ]);
     }
 
@@ -212,16 +212,16 @@ class ChallengeSystemTest extends TestCase
     public function it_can_submit_level3_queue_challenge()
     {
         $response = $this->post('/level3/queue', [
-            'data' => ['test' => 'queue_data']
+            'data' => ['test' => 'queue_data'],
         ]);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'input',
             'result' => [
-                'success'
+                'success',
             ],
-            'hint'
+            'hint',
         ]);
     }
 
@@ -229,16 +229,16 @@ class ChallengeSystemTest extends TestCase
     public function it_can_submit_level3_event_challenge()
     {
         $response = $this->post('/level3/event', [
-            'payload' => ['event' => 'test_data']
+            'payload' => ['event' => 'test_data'],
         ]);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'payload',
             'result' => [
-                'success'
+                'success',
             ],
-            'hint'
+            'hint',
         ]);
     }
 
@@ -251,17 +251,17 @@ class ChallengeSystemTest extends TestCase
                 ['name' => 'Item 2', 'active' => false, 'score' => 50],
                 ['name' => 'Item 3', 'active' => true, 'score' => 70],
                 ['name' => 'Item 4', 'active' => true, 'score' => 40],
-                ['name' => 'Item 5', 'active' => true, 'score' => 60]
-            ]
+                ['name' => 'Item 5', 'active' => true, 'score' => 60],
+            ],
         ]);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'input_count',
             'result' => [
-                'success'
+                'success',
             ],
-            'hint'
+            'hint',
         ]);
     }
 
@@ -278,7 +278,7 @@ class ChallengeSystemTest extends TestCase
             'level2_completed',
             'level3_completed',
             'total_completed',
-            'total_challenges'
+            'total_challenges',
         ]);
     }
 
@@ -287,7 +287,7 @@ class ChallengeSystemTest extends TestCase
     {
         $response = $this->post('/api/progress/update', [
             'challenge_id' => 1,
-            'flag' => 'FLAG_1_ARRAY_FIX_' . substr(md5('test'), 0, 8)
+            'flag' => 'FLAG_1_ARRAY_FIX_'.substr(md5('test'), 0, 8),
         ]);
 
         $response->assertStatus(200);
@@ -298,7 +298,7 @@ class ChallengeSystemTest extends TestCase
             'level2_completed',
             'level3_completed',
             'total_completed',
-            'total_challenges'
+            'total_challenges',
         ]);
     }
 
@@ -309,7 +309,7 @@ class ChallengeSystemTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertJson([
-            'message' => 'Progress reset successfully'
+            'message' => 'Progress reset successfully',
         ]);
     }
 
@@ -318,13 +318,13 @@ class ChallengeSystemTest extends TestCase
     {
         $response = $this->post('/level1/submit-flag', [
             'challenge_id' => 1,
-            'flag' => 'FLAG_1_ARRAY_FIX_' . substr(md5('test'), 0, 8)
+            'flag' => 'FLAG_1_ARRAY_FIX_'.substr(md5('test'), 0, 8),
         ]);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
-            'message'
+            'message',
         ]);
     }
 
@@ -333,13 +333,13 @@ class ChallengeSystemTest extends TestCase
     {
         $response = $this->post('/level2/submit-flag', [
             'challenge_id' => 5,
-            'flag' => 'FLAG_2_VALIDATION_' . substr(md5('test'), 0, 8)
+            'flag' => 'FLAG_2_VALIDATION_'.substr(md5('test'), 0, 8),
         ]);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
-            'message'
+            'message',
         ]);
     }
 
@@ -348,13 +348,13 @@ class ChallengeSystemTest extends TestCase
     {
         $response = $this->post('/level3/submit-flag', [
             'challenge_id' => 11,
-            'flag' => 'FLAG_3_QUEUE_' . substr(md5('test'), 0, 8)
+            'flag' => 'FLAG_3_QUEUE_'.substr(md5('test'), 0, 8),
         ]);
 
         $response->assertStatus(200);
         $response->assertJsonStructure([
             'success',
-            'message'
+            'message',
         ]);
     }
 
@@ -388,11 +388,11 @@ class ChallengeSystemTest extends TestCase
             'level' => 1,
             'encrypted_flag' => FlagService::encrypt('TEST_FLAG'),
             'hints' => ['hint1', 'hint2'],
-            'is_active' => true
+            'is_active' => true,
         ]);
 
         $retrieved = Challenge::find($challenge->id);
-        
+
         $this->assertEquals($challenge->title, $retrieved->title);
         $this->assertEquals($challenge->level, $retrieved->level);
         $this->assertEquals('TEST_FLAG', $retrieved->flag);

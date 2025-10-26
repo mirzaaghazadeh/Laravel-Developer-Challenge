@@ -16,12 +16,12 @@ class Challenge extends Model
         'level',
         'encrypted_flag',
         'hints',
-        'is_active'
+        'is_active',
     ];
 
     protected $casts = [
         'hints' => 'array',
-        'is_active' => 'boolean'
+        'is_active' => 'boolean',
     ];
 
     /**
@@ -37,8 +37,8 @@ class Challenge extends Model
      */
     public function getFlagAttribute()
     {
-        return isset($this->attributes['encrypted_flag']) 
-            ? Crypt::decrypt($this->attributes['encrypted_flag']) 
+        return isset($this->attributes['encrypted_flag'])
+            ? Crypt::decrypt($this->attributes['encrypted_flag'])
             : null;
     }
 

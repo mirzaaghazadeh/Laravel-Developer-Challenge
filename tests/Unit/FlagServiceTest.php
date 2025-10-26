@@ -2,8 +2,8 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use App\Services\FlagService;
+use Tests\TestCase;
 
 class FlagServiceTest extends TestCase
 {
@@ -48,7 +48,7 @@ class FlagServiceTest extends TestCase
     {
         // This test would verify that the log method is called
         // In a real implementation, you'd mock the Log facade
-        
+
         $challengeId = 1;
         $flag = 'TEST_FLAG';
         $isCorrect = true;
@@ -56,7 +56,7 @@ class FlagServiceTest extends TestCase
         // Call the method
         FlagService::logFlagSubmission($challengeId, $flag, $isCorrect);
 
-        // Since we can't easily test logging without mocking, 
+        // Since we can't easily test logging without mocking,
         // we'll just verify the method doesn't throw an exception
         $this->assertTrue(true); // If we reach here, no exception was thrown
     }
