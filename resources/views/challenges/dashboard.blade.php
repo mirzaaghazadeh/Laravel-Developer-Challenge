@@ -191,7 +191,7 @@
             <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
                 <h3 class="text-lg font-semibold text-gray-800 mb-3">🎯 Challenge Objectives</h3>
                 <ul class="text-sm text-gray-700 space-y-2">
-                    <li>• Complete all 17 challenges within 30 minutes</li>
+                    <li>• Complete all 17 challenges within 45 minutes</li>
                     <li>• Find all hidden flags by fixing the code issues</li>
                     <li>• Demonstrate senior-level Laravel and PHP knowledge</li>
                     <li>• Show debugging and problem-solving skills</li>

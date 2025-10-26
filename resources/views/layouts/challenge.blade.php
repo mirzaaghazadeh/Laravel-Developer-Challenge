@@ -113,6 +113,23 @@
                 setTimeout(() => notification.remove(), 300);
             }, 3000);
         }
+
+        // Toggle hint visibility
+        function toggleHint(challengeId) {
+            const hintElement = document.getElementById('hint-' + challengeId);
+            if (hintElement) {
+                hintElement.classList.toggle('hidden');
+                
+                // Track hint usage
+                if (!hintElement.classList.contains('hidden')) {
+                    axios.post('/api/progress/hint', {
+                        challenge_id: challengeId
+                    }).catch(error => {
+                        console.error('Error tracking hint:', error);
+                    });
+                }
+            }
+        }
     </script>
 </body>
 </html>

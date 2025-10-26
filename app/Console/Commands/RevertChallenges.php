@@ -74,6 +74,18 @@ class RevertChallenges extends Command
         );
         $this->line('  ✓ Reverted brokenFactorial (back to string return type)');
 
+        // Revert 3b: verifyFactorial - remove flag
+        $content = str_replace(
+            "        if (\$userAnswer === \$correct) {
+            return 'Correct! FLAG_1_FACTORIAL_'.substr(md5(\$correct), 0, 8);
+        }",
+            "        if (\$userAnswer === \$correct) {
+            return 'Correct! But no flag until factorial is fixed properly.';
+        }",
+            $content
+        );
+        $this->line('  ✓ Reverted verifyFactorial (removed flag)');
+
         // Revert 4: obfuscatedCodeChallenge - remove uppercase handling
         $new = "            // Fixed: Handle both uppercase and lowercase
             if (ctype_lower(\$char)) {
@@ -117,13 +129,64 @@ class RevertChallenges extends Command
         );
         $this->line('  ✓ Reverted brokenValidation (removed age required)');
 
-        // Revert 3: brokenCacheImplementation - remove expiration
+        // Revert 1b: brokenValidation - make flag conditional on proper validation
+        $content = str_replace(
+            "        // Hidden flag when validation passes correctly
+        return [
+            'success' => true,
+            'message' => 'Validation passed!',
+            'errors' => [], // Include empty errors array for consistent structure
+            'flag' => 'FLAG_2_VALIDATION_'.substr(md5(json_encode(\$data)), 0, 8),
+        ];",
+            "        // Hidden flag when validation passes correctly
+        return [
+            'success' => true,
+            'message' => 'Validation passed!',
+            'errors' => [], // Include empty errors array for consistent structure
+            'flag' => null, // No flag until validation is properly fixed
+        ];",
+            $content
+        );
+        $this->line('  ✓ Reverted brokenValidation (removed flag return)');
+
+        // Revert 2: brokenDatabaseQuery - no flag in broken state
+        $content = str_replace(
+            "        return [
+            'users' => \$result,
+            'query_count' => \$queryCount,
+            'hint' => \$queryCount > 2 ? 'Too many queries! Think about eager loading.' : null,
+            'flag' => \$queryCount <= 2 ? 'FLAG_2_DATABASE_'.substr(md5(\$queryCount), 0, 8) : null,
+        ];",
+            "        return [
+            'users' => \$result,
+            'query_count' => \$queryCount,
+            'hint' => \$queryCount > 2 ? 'Too many queries! Think about eager loading.' : null,
+            'flag' => null, // No flag until optimized
+        ];",
+            $content
+        );
+        $this->line('  ✓ Reverted brokenDatabaseQuery (removed flag)');
+
+        // Revert 3: brokenCacheImplementation - remove expiration and flag
         $content = str_replace(
             "// Fixed: Added expiration time\n            Cache::put(\$key, \$data, 3600);",
             "// Bug: No proper cache key namespace and no expiration\n            Cache::put(\$key, \$data);",
             $content
         );
-        $this->line('  ✓ Reverted brokenCacheImplementation (removed cache expiration)');
+        $content = str_replace(
+            "            return [
+                'source' => 'database',
+                'data' => \$data,
+                'flag' => 'FLAG_2_CACHE_'.substr(md5(\$key), 0, 8),
+            ];",
+            "            return [
+                'source' => 'database',
+                'data' => \$data,
+                'flag' => null, // No flag until cache is properly implemented
+            ];",
+            $content
+        );
+        $this->line('  ✓ Reverted brokenCacheImplementation (removed cache expiration and flag)');
 
         // Revert 4: brokenAPIResponse - back to broken pagination
         $newAPI = "        // Fixed: Correct pagination logic
@@ -202,6 +265,44 @@ class RevertChallenges extends Command
         $content = str_replace($newRelationship, $oldRelationship, $content);
         $this->line('  ✓ Reverted brokenRelationshipQuery (back to broken GROUP BY)');
 
+        // Revert 5b: brokenRelationshipQuery - remove flag
+        $content = str_replace(
+            "        return [
+            'users' => \$usersWithPosts,
+            'query_count' => count(\$queries),
+            'flag' => count(\$queries) === 1 ? 'FLAG_2_RELATIONSHIP_'.substr(md5(count(\$queries)), 0, 8) : null,
+            'hint' => count(\$queries) > 1 ? 'Too many queries! Can you do this with one query?' : null,
+        ];",
+            "        return [
+            'users' => \$usersWithPosts,
+            'query_count' => count(\$queries),
+            'flag' => null, // No flag until relationship is fixed
+            'hint' => 'Can you optimize this query? Check the GROUP BY clause!',
+        ];",
+            $content
+        );
+        $this->line('  ✓ Reverted brokenRelationshipQuery (removed flag)');
+
+        // Revert 6: brokenMiddlewareLogic - remove flag
+        $content = str_replace(
+            "        // Hidden flag when security is properly implemented
+        return [
+            'success' => true,
+            'message' => 'Authentication successful',
+            'data' => \$request,
+            'flag' => 'FLAG_2_SECURITY_'.substr(md5(\$apiKey.\$timestamp), 0, 8),
+        ];",
+            "        // Hidden flag when security is properly implemented
+        return [
+            'success' => true,
+            'message' => 'Authentication successful',
+            'data' => \$request,
+            'flag' => null, // No flag until security is properly implemented
+        ];",
+            $content
+        );
+        $this->line('  ✓ Reverted brokenMiddlewareLogic (removed flag)');
+
         File::put($file, $content);
         $this->info('  ✅ Level 2 reverted');
         $this->newLine();
@@ -231,6 +332,140 @@ class RevertChallenges extends Command
 
         $content = str_replace($new, $old, $content);
         $this->line('  ✓ Reverted brokenQueueJob (back to synchronous processing)');
+
+        // Revert 1b: brokenQueueJob - remove flag
+        $content = str_replace(
+            "            return [
+                'success' => true,
+                'message' => 'Job processed',
+                'data' => \$data,
+                'flag' => 'FLAG_3_QUEUE_'.substr(md5(json_encode(\$data)), 0, 8),
+            ];",
+            "            return [
+                'success' => true,
+                'message' => 'Job processed',
+                'data' => \$data,
+                'flag' => null, // No flag until queue is properly implemented
+            ];",
+            $content
+        );
+        $this->line('  ✓ Reverted brokenQueueJob (removed flag)');
+
+        // Revert 2: brokenEventSystem - remove flag
+        $content = str_replace(
+            "            return [
+                'success' => true,
+                'message' => 'Event system working',
+                'result' => [
+                    'event_fired' => \$eventFired,
+                    'listener_executed' => \$listenerExecuted,
+                ],
+                'flag' => 'FLAG_3_EVENT_'.substr(md5(json_encode(\$payload)), 0, 8),
+            ];",
+            "            return [
+                'success' => true,
+                'message' => 'Event system working',
+                'result' => [
+                    'event_fired' => \$eventFired,
+                    'listener_executed' => \$listenerExecuted,
+                ],
+                'flag' => null, // No flag until event system is verified
+            ];",
+            $content
+        );
+        $this->line('  ✓ Reverted brokenEventSystem (removed flag)');
+
+        // Revert 3: collectionChallenge - remove flag
+        $content = str_replace(
+            "            return [
+                'success' => true,
+                'result' => [
+                    'data' => \$result->toArray(),
+                    'stats' => \$stats,
+                ],
+                'flag' => 'FLAG_3_COLLECTION_'.substr(md5(\$totalScore), 0, 8),
+            ];",
+            "            return [
+                'success' => true,
+                'result' => [
+                    'data' => \$result->toArray(),
+                    'stats' => \$stats,
+                ],
+                'flag' => null, // No flag until collection is properly optimized
+            ];",
+            $content
+        );
+        $this->line('  ✓ Reverted collectionChallenge (removed flag)');
+
+        // Revert 4: serviceContainerChallenge - remove flag
+        $content = str_replace(
+            "            return [
+                'success' => true,
+                'result' => \$result,
+                'flag' => 'FLAG_3_CONTAINER_'.substr(md5(get_class(\$service)), 0, 8),
+            ];",
+            "            return [
+                'success' => true,
+                'result' => \$result,
+                'flag' => null, // No flag until service container is properly configured
+            ];",
+            $content
+        );
+        $this->line('  ✓ Reverted serviceContainerChallenge (removed flag)');
+
+        // Revert 5: testingChallenge - remove flag
+        $content = str_replace(
+            "            return [
+                'success' => true,
+                'tests' => \$results,
+                'flag' => 'FLAG_3_TESTING_'.substr(md5(json_encode(\$testData)), 0, 8),
+            ];",
+            "            return [
+                'success' => true,
+                'tests' => \$results,
+                'flag' => null, // No flag until all tests pass
+            ];",
+            $content
+        );
+        $this->line('  ✓ Reverted testingChallenge (removed flag)');
+
+        // Revert 6: advancedQueryBuilderChallenge - remove flag
+        $content = str_replace(
+            "                return [
+                    'success' => true,
+                    'results' => \$results,
+                    'flag' => 'FLAG_3_QUERY_'.substr(md5(\$results->count()), 0, 8),
+                ];",
+            "                return [
+                    'success' => true,
+                    'results' => \$results,
+                    'flag' => null, // No flag until query is optimized
+                ];",
+            $content
+        );
+        $this->line('  ✓ Reverted advancedQueryBuilderChallenge (removed flag)');
+
+        // Revert 7: middlewarePipelineChallenge - remove flag
+        $content = str_replace(
+            "        return [
+            'success' => true,
+            'result' => [
+                'data' => \$result,
+                'executed' => \$executed,
+            ],
+            'flag' => 'FLAG_3_MIDDLEWARE_'.substr(md5(implode(',', \$executed)), 0, 8),
+        ];",
+            "        return [
+            'success' => true,
+            'result' => [
+                'data' => \$result,
+                'executed' => \$executed,
+            ],
+            'flag' => null, // No flag until middleware pipeline is complete
+        ];",
+            $content
+        );
+        $this->line('  ✓ Reverted middlewarePipelineChallenge (removed flag)');
 
         File::put($file, $content);
         $this->info('  ✅ Level 3 reverted');

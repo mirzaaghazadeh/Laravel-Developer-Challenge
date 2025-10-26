@@ -9,7 +9,7 @@
         
         <div class="text-center mb-8">
             <p class="text-xl text-gray-700 mb-4">Test your Laravel and PHP skills with our comprehensive 3-level challenge system!</p>
-            <p class="text-gray-600">Designed for senior developers - complete all challenges in under 30 minutes.</p>
+            <p class="text-gray-600">Designed for senior developers - complete all challenges in under 45 minutes.</p>
         </div>
 
         <div class="grid md:grid-cols-3 gap-6 mb-8">

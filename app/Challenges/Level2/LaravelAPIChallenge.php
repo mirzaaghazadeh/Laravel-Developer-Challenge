@@ -36,7 +36,7 @@ class LaravelAPIChallenge
             'success' => true,
             'message' => 'Validation passed!',
             'errors' => [], // Include empty errors array for consistent structure
-            'flag' => 'FLAG_2_VALIDATION_'.substr(md5(json_encode($data)), 0, 8),
+            'flag' => null, // No flag until validation is properly fixed
         ];
     }
 
@@ -67,7 +67,7 @@ class LaravelAPIChallenge
             'users' => $result,
             'query_count' => $queryCount,
             'hint' => $queryCount > 2 ? 'Too many queries! Think about eager loading.' : null,
-            'flag' => $queryCount <= 2 ? 'FLAG_2_DATABASE_'.substr(md5($queryCount), 0, 8) : null,
+            'flag' => null, // No flag until optimized
         ];
     }
 
@@ -94,7 +94,7 @@ class LaravelAPIChallenge
             return [
                 'source' => 'database',
                 'data' => $data,
-                'flag' => 'FLAG_2_CACHE_'.substr(md5($key), 0, 8),
+                'flag' => null, // No flag until cache is properly implemented
             ];
         }
 
@@ -163,8 +163,8 @@ class LaravelAPIChallenge
         return [
             'users' => $usersWithPosts,
             'query_count' => count($queries),
-            'flag' => count($queries) === 1 ? 'FLAG_2_RELATIONSHIP_'.substr(md5(count($queries)), 0, 8) : null,
-            'hint' => count($queries) > 1 ? 'Too many queries! Can you do this with one query?' : null,
+            'flag' => null, // No flag until relationship is fixed
+            'hint' => 'Can you optimize this query? Check the GROUP BY clause!',
         ];
     }
 
@@ -201,7 +201,7 @@ class LaravelAPIChallenge
             'success' => true,
             'message' => 'Authentication successful',
             'data' => $request,
-            'flag' => 'FLAG_2_SECURITY_'.substr(md5($apiKey.$timestamp), 0, 8),
+            'flag' => null, // No flag until security is properly implemented
         ];
     }
 }

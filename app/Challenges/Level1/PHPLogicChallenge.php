@@ -75,7 +75,7 @@ class PHPLogicChallenge
         }
 
         if ($userAnswer === $correct) {
-            return 'Correct! FLAG_1_FACTORIAL_'.substr(md5($correct), 0, 8);
+            return 'Correct! But no flag until factorial is fixed properly.';
         }
 
         return "Wrong answer. {$n}! = {$correct}, not {$userAnswer}";

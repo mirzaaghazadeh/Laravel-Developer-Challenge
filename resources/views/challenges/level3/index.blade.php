@@ -19,7 +19,7 @@
                 <div id="hint-11" class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3 hidden">
                     <p class="text-sm text-blue-800">📁 <strong>File to fix:</strong> <code class="bg-blue-100 px-2 py-1 rounded">app/Challenges/Level3/AdvancedLaravelChallenge.php</code></p>
                     <p class="text-xs text-blue-600 mt-1">Look for: <code>brokenQueueJob()</code> method</p>
-                </div></div>
+                </div>
                 
                 <div class="space-y-3">
                     <textarea id="queueData" class="w-full border rounded px-3 py-2" rows="3" placeholder='{"test": "data"}'>{"test": "queue_data"}</textarea>
@@ -40,7 +40,7 @@
                 <div id="hint-12" class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3 hidden">
                     <p class="text-sm text-blue-800">📁 <strong>File to fix:</strong> <code class="bg-blue-100 px-2 py-1 rounded">app/Challenges/Level3/AdvancedLaravelChallenge.php</code></p>
                     <p class="text-xs text-blue-600 mt-1">Look for: <code>brokenEventSystem()</code> method</p>
-                </div></div>
+                </div>
                 
                 <div class="space-y-3">
                     <textarea id="eventPayload" class="w-full border rounded px-3 py-2" rows="3" placeholder='{"event": "data"}'>{"event": "test_data"}</textarea>
@@ -61,7 +61,7 @@
                 <div id="hint-13" class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3 hidden">
                     <p class="text-sm text-blue-800">📁 <strong>File to fix:</strong> <code class="bg-blue-100 px-2 py-1 rounded">app/Challenges/Level3/AdvancedLaravelChallenge.php</code></p>
                     <p class="text-xs text-blue-600 mt-1">Look for: <code>collectionChallenge()</code> method</p>
-                </div></div>
+                </div>
                 
                 <div class="space-y-3">
                     <textarea id="collectionData" class="w-full border rounded px-3 py-2" rows="4" placeholder='Array of objects'>[{"name": "Item 1", "active": true, "score": 30}, {"name": "Item 2", "active": false, "score": 50}, {"name": "Item 3", "active": true, "score": 70}]</textarea>
@@ -82,7 +82,7 @@
                 <div id="hint-14" class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3 hidden">
                     <p class="text-sm text-blue-800">📁 <strong>File to fix:</strong> <code class="bg-blue-100 px-2 py-1 rounded">app/Challenges/Level3/AdvancedLaravelChallenge.php</code></p>
                     <p class="text-xs text-blue-600 mt-1">Look for: <code>serviceContainerChallenge()</code> method</p>
-                </div></div>
+                </div>
                 
                 <div class="space-y-3">
                     <button onclick="testServiceContainerChallenge()" class="w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
@@ -102,7 +102,7 @@
                 <div id="hint-15" class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3 hidden">
                     <p class="text-sm text-blue-800">📁 <strong>File to fix:</strong> <code class="bg-blue-100 px-2 py-1 rounded">app/Challenges/Level3/AdvancedLaravelChallenge.php</code></p>
                     <p class="text-xs text-blue-600 mt-1">Look for: <code>testingChallenge()</code> method</p>
-                </div></div>
+                </div>
                 
                 <div class="space-y-3">
                     <textarea id="testData" class="w-full border rounded px-3 py-2" rows="3" placeholder='Test data structure'>{"id": 123, "count": 42, "status": "active"}</textarea>
@@ -123,7 +123,7 @@
                 <div id="hint-16" class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3 hidden">
                     <p class="text-sm text-blue-800">📁 <strong>File to fix:</strong> <code class="bg-blue-100 px-2 py-1 rounded">app/Challenges/Level3/AdvancedLaravelChallenge.php</code></p>
                     <p class="text-xs text-blue-600 mt-1">Look for: <code>advancedQueryBuilderChallenge()</code> method</p>
-                </div></div>
+                </div>
                 
                 <div class="space-y-3">
                     <button onclick="testQueryBuilderChallenge()" class="w-full bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700">
@@ -143,7 +143,7 @@
                 <div id="hint-17" class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3 hidden">
                     <p class="text-sm text-blue-800">📁 <strong>File to fix:</strong> <code class="bg-blue-100 px-2 py-1 rounded">app/Challenges/Level3/AdvancedLaravelChallenge.php</code></p>
                     <p class="text-xs text-blue-600 mt-1">Look for: <code>middlewarePipelineChallenge()</code> method</p>
-                </div></div>
+                </div>
                 
                 <div class="space-y-3">
                     <textarea id="pipelineRequest" class="w-full border rounded px-3 py-2" rows="3" placeholder='Request data'>{"token": "valid_token_12345", "role": "admin", "data": {"test": "payload"}}</textarea>
@@ -229,7 +229,6 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(loadProgressStats, 3000);
 });
 
-<script>
 function testQueueChallenge() {
     let data;
     try {
@@ -240,16 +239,18 @@ function testQueueChallenge() {
     
     axios.post('/level3/queue', { data: data })
         .then(response => {
-            const result = document.getElementById('queueResult');
-            result.innerHTML = `
-                <div><strong>Success:</strong> ${response.data.result.success}</div>
-                <div><strong>Message:</strong> ${response.data.result.message || response.data.result.error}</div>
-                <div><strong>Hint:</strong> ${response.data.result.hint}</div>
-                ${response.data.result.flag ? `<div class="text-green-600"><strong>FLAG:</strong> ${response.data.result.flag}</div>` : ''}
+            const resultDiv = document.getElementById('queueResult');
+            const challengeResult = response.data.result;
+            
+            resultDiv.innerHTML = `
+                <div><strong>Success:</strong> ${challengeResult.success}</div>
+                <div><strong>Message:</strong> ${challengeResult.message || challengeResult.error || ''}</div>
+                <div><strong>Hint:</strong> ${challengeResult.hint || response.data.hint || ''}</div>
+                ${challengeResult.flag ? `<div class="text-green-600"><strong>FLAG:</strong> ${challengeResult.flag}</div>` : ''}
             `;
             
-            if (response.data.result.flag) {
-                result.classList.add('flag-found');
+            if (challengeResult.flag) {
+                resultDiv.classList.add('flag-found');
                 showNotification('Flag found in queue challenge!', 'success');
             }
         })
@@ -268,17 +269,20 @@ function testEventChallenge() {
     
     axios.post('/level3/event', { payload: payload })
         .then(response => {
-            const result = document.getElementById('eventResult');
-            result.innerHTML = `
-                <div><strong>Success:</strong> ${response.data.result.success}</div>
-                <div><strong>Message:</strong> ${response.data.result.message}</div>
-                <div><strong>Event Fired:</strong> ${response.data.result.event_fired}</div>
-                <div><strong>Listener Executed:</strong> ${response.data.result.listener_executed}</div>
-                ${response.data.result.flag ? `<div class="text-green-600"><strong>FLAG:</strong> ${response.data.result.flag}</div>` : ''}
+            const resultDiv = document.getElementById('eventResult');
+            const challengeResult = response.data.result;
+            const eventResult = challengeResult.result || {};
+            
+            resultDiv.innerHTML = `
+                <div><strong>Success:</strong> ${challengeResult.success}</div>
+                <div><strong>Message:</strong> ${challengeResult.message || ''}</div>
+                <div><strong>Event Fired:</strong> ${eventResult.event_fired || false}</div>
+                <div><strong>Listener Executed:</strong> ${eventResult.listener_executed || false}</div>
+                ${challengeResult.flag ? `<div class="text-green-600"><strong>FLAG:</strong> ${challengeResult.flag}</div>` : ''}
             `;
             
-            if (response.data.result.flag) {
-                result.classList.add('flag-found');
+            if (challengeResult.flag) {
+                resultDiv.classList.add('flag-found');
                 showNotification('Flag found in event challenge!', 'success');
             }
         })
@@ -303,19 +307,23 @@ function testCollectionChallenge() {
     
     axios.post('/level3/collection', { data: data })
         .then(response => {
-            const result = document.getElementById('collectionResult');
-            const stats = response.data.result.stats || {};
-            result.innerHTML = `
-                <div><strong>Success:</strong> ${response.data.result.success}</div>
-                <div><strong>Items Processed:</strong> ${response.data.result.result ? response.data.result.result.length : 0}</div>
+            const resultDiv = document.getElementById('collectionResult');
+            const challengeResult = response.data.result;
+            const resultData = challengeResult.result || {};
+            const stats = resultData.stats || {};
+            const items = resultData.data || [];
+            
+            resultDiv.innerHTML = `
+                <div><strong>Success:</strong> ${challengeResult.success}</div>
+                <div><strong>Items Processed:</strong> ${items.length}</div>
                 <div><strong>Total Score:</strong> ${stats.total_score || 0}</div>
                 <div><strong>Average Score:</strong> ${stats.average_score || 0}</div>
-                <div><strong>Hint:</strong> ${response.data.result.hint}</div>
-                ${response.data.result.flag ? `<div class="text-green-600"><strong>FLAG:</strong> ${response.data.result.flag}</div>` : ''}
+                <div><strong>Hint:</strong> ${challengeResult.hint || response.data.hint || ''}</div>
+                ${challengeResult.flag ? `<div class="text-green-600"><strong>FLAG:</strong> ${challengeResult.flag}</div>` : ''}
             `;
             
-            if (response.data.result.flag) {
-                result.classList.add('flag-found');
+            if (challengeResult.flag) {
+                resultDiv.classList.add('flag-found');
                 showNotification('Flag found in collection challenge!', 'success');
             }
         })
@@ -407,17 +415,20 @@ function testMiddlewarePipelineChallenge() {
     
     axios.post('/level3/middleware-pipeline', { request: requestData })
         .then(response => {
-            const result = document.getElementById('pipelineResult');
-            result.innerHTML = `
-                <div><strong>Success:</strong> ${response.data.result.success}</div>
-                <div><strong>Executed Stages:</strong> ${response.data.result.executed ? response.data.result.executed.join(', ') : 'none'}</div>
-                <div><strong>Failed At:</strong> ${response.data.result.failed_at || 'none'}</div>
-                <div><strong>Hint:</strong> ${response.data.result.hint}</div>
-                ${response.data.result.flag ? `<div class="text-green-600"><strong>FLAG:</strong> ${response.data.result.flag}</div>` : ''}
+            const resultDiv = document.getElementById('pipelineResult');
+            const challengeResult = response.data.result;
+            const pipelineResult = challengeResult.result || {};
+            
+            resultDiv.innerHTML = `
+                <div><strong>Success:</strong> ${challengeResult.success}</div>
+                <div><strong>Executed Stages:</strong> ${pipelineResult.executed ? pipelineResult.executed.join(', ') : 'none'}</div>
+                <div><strong>Failed At:</strong> ${challengeResult.failed_at || 'none'}</div>
+                <div><strong>Hint:</strong> ${challengeResult.hint || response.data.hint || ''}</div>
+                ${challengeResult.flag ? `<div class="text-green-600"><strong>FLAG:</strong> ${challengeResult.flag}</div>` : ''}
             `;
             
-            if (response.data.result.flag) {
-                result.classList.add('flag-found');
+            if (challengeResult.flag) {
+                resultDiv.classList.add('flag-found');
                 showNotification('Flag found in middleware pipeline challenge!', 'success');
             }
         })

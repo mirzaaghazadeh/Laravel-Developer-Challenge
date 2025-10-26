@@ -26,9 +26,16 @@ class Level3Controller extends Controller
         $data = $request->input('data', ['test' => 'queue_data']);
         $result = AdvancedLaravelChallenge::brokenQueueJob($data);
 
-        if ($result['flag']) {
+        if (isset($result['flag']) && $result['flag']) {
             Log::info('Level 3 Queue Challenge Solved', ['data' => $data, 'flag' => $result['flag']]);
             FlagService::logFlagSubmission(11, $result['flag'], true);
+            
+            // Update progress automatically
+            $progressController = new \App\Http\Controllers\API\ProgressController();
+            $progressController->updateProgress(new Request([
+                'challenge_id' => 11,
+                'flag' => $result['flag']
+            ]));
         }
 
         return response()->json([
@@ -46,9 +53,16 @@ class Level3Controller extends Controller
         $payload = $request->input('payload', ['event' => 'test_data']);
         $result = AdvancedLaravelChallenge::brokenEventSystem($payload);
 
-        if ($result['flag']) {
+        if (isset($result['flag']) && $result['flag']) {
             Log::info('Level 3 Event Challenge Solved', ['payload' => $payload, 'flag' => $result['flag']]);
             FlagService::logFlagSubmission(12, $result['flag'], true);
+            
+            // Update progress automatically
+            $progressController = new \App\Http\Controllers\API\ProgressController();
+            $progressController->updateProgress(new Request([
+                'challenge_id' => 12,
+                'flag' => $result['flag']
+            ]));
         }
 
         return response()->json([
@@ -72,9 +86,16 @@ class Level3Controller extends Controller
         ]);
         $result = AdvancedLaravelChallenge::collectionChallenge($data);
 
-        if ($result['flag']) {
+        if (isset($result['flag']) && $result['flag']) {
             Log::info('Level 3 Collection Challenge Solved', ['data_count' => count($data), 'flag' => $result['flag']]);
             FlagService::logFlagSubmission(13, $result['flag'], true);
+            
+            // Update progress automatically
+            $progressController = new \App\Http\Controllers\API\ProgressController();
+            $progressController->updateProgress(new Request([
+                'challenge_id' => 13,
+                'flag' => $result['flag']
+            ]));
         }
 
         return response()->json([
@@ -91,9 +112,16 @@ class Level3Controller extends Controller
     {
         $result = AdvancedLaravelChallenge::serviceContainerChallenge();
 
-        if ($result['flag']) {
+        if (isset($result['flag']) && $result['flag']) {
             Log::info('Level 3 Service Container Challenge Solved', ['flag' => $result['flag']]);
             FlagService::logFlagSubmission(14, $result['flag'], true);
+            
+            // Update progress automatically
+            $progressController = new \App\Http\Controllers\API\ProgressController();
+            $progressController->updateProgress(new Request([
+                'challenge_id' => 14,
+                'flag' => $result['flag']
+            ]));
         }
 
         return response()->json([
@@ -114,9 +142,16 @@ class Level3Controller extends Controller
         ]);
         $result = AdvancedLaravelChallenge::testingChallenge($testData);
 
-        if ($result['flag']) {
+        if (isset($result['flag']) && $result['flag']) {
             Log::info('Level 3 Testing Challenge Solved', ['test_data' => $testData, 'flag' => $result['flag']]);
             FlagService::logFlagSubmission(15, $result['flag'], true);
+            
+            // Update progress automatically
+            $progressController = new \App\Http\Controllers\API\ProgressController();
+            $progressController->updateProgress(new Request([
+                'challenge_id' => 15,
+                'flag' => $result['flag']
+            ]));
         }
 
         return response()->json([
@@ -133,9 +168,16 @@ class Level3Controller extends Controller
     {
         $result = AdvancedLaravelChallenge::advancedQueryBuilderChallenge();
 
-        if ($result['flag']) {
+        if (isset($result['flag']) && $result['flag']) {
             Log::info('Level 3 Query Builder Challenge Solved', ['flag' => $result['flag']]);
             FlagService::logFlagSubmission(16, $result['flag'], true);
+            
+            // Update progress automatically
+            $progressController = new \App\Http\Controllers\API\ProgressController();
+            $progressController->updateProgress(new Request([
+                'challenge_id' => 16,
+                'flag' => $result['flag']
+            ]));
         }
 
         return response()->json([
@@ -156,9 +198,16 @@ class Level3Controller extends Controller
         ]);
         $result = AdvancedLaravelChallenge::middlewarePipelineChallenge($requestData);
 
-        if ($result['flag']) {
+        if (isset($result['flag']) && $result['flag']) {
             Log::info('Level 3 Middleware Pipeline Challenge Solved', ['flag' => $result['flag']]);
             FlagService::logFlagSubmission(17, $result['flag'], true);
+            
+            // Update progress automatically
+            $progressController = new \App\Http\Controllers\API\ProgressController();
+            $progressController->updateProgress(new Request([
+                'challenge_id' => 17,
+                'flag' => $result['flag']
+            ]));
         }
 
         return response()->json([

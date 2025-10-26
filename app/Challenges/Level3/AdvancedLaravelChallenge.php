@@ -27,7 +27,7 @@ class AdvancedLaravelChallenge
                 'success' => true,
                 'message' => 'Job processed',
                 'data' => $data,
-                'flag' => 'FLAG_3_QUEUE_'.substr(md5(json_encode($data)), 0, 8),
+                'flag' => null, // No flag until queue is properly implemented
             ];
         } catch (\Exception $e) {
             return [
@@ -67,7 +67,7 @@ class AdvancedLaravelChallenge
                     'event_fired' => $eventFired,
                     'listener_executed' => $listenerExecuted,
                 ],
-                'flag' => 'FLAG_3_EVENT_'.substr(md5(json_encode($payload)), 0, 8),
+                'flag' => null, // No flag until event system is verified
             ];
         }
 
@@ -118,7 +118,7 @@ class AdvancedLaravelChallenge
                     'data' => $result->toArray(),
                     'stats' => $stats,
                 ],
-                'flag' => 'FLAG_3_COLLECTION_'.substr(md5($totalScore), 0, 8),
+                'flag' => null, // No flag until collection is properly optimized
             ];
         }
 
@@ -152,7 +152,7 @@ class AdvancedLaravelChallenge
             return [
                 'success' => true,
                 'result' => $result,
-                'flag' => 'FLAG_3_CONTAINER_'.substr(md5(get_class($service)), 0, 8),
+                'flag' => null, // No flag until service container is properly configured
             ];
         } catch (\Exception $e) {
             return [
@@ -201,7 +201,7 @@ class AdvancedLaravelChallenge
             return [
                 'success' => true,
                 'tests' => $results,
-                'flag' => 'FLAG_3_TESTING_'.substr(md5(json_encode($testData)), 0, 8),
+                'flag' => null, // No flag until all tests pass
             ];
         }
 
@@ -242,7 +242,7 @@ class AdvancedLaravelChallenge
                 return [
                     'success' => true,
                     'results' => $results,
-                    'flag' => 'FLAG_3_QUERY_'.substr(md5($results->count()), 0, 8),
+                    'flag' => null, // No flag until query is optimized
                 ];
             }
 
@@ -330,7 +330,7 @@ class AdvancedLaravelChallenge
                 'data' => $result,
                 'executed' => $executed,
             ],
-            'flag' => 'FLAG_3_MIDDLEWARE_'.substr(md5(implode(',', $executed)), 0, 8),
+            'flag' => null, // No flag until middleware pipeline is complete
         ];
     }
 }

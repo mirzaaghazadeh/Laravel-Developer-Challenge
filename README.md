@@ -2,11 +2,9 @@
 
 A comprehensive challenge system designed to test senior Laravel developers' skills in PHP, Laravel framework, and advanced web development concepts.
 
-**Created by Navid Mirzaaghazadeh** | [GitHub](https://github.com/mirzaaghazadeh)
-
 ## 🎯 Overview
 
-This challenge system evaluates senior Laravel developers through practical coding challenges. Candidates must find and fix bugs, optimize code, and solve problems to capture hidden flags within a 30-minute time limit.
+This challenge system evaluates senior Laravel developers through practical coding challenges. Candidates must find and fix bugs, optimize code, and solve problems to capture hidden flags within a 45-minute time limit.
 
 ## 📋 Challenge Structure
 
