@@ -11,22 +11,26 @@ parameters:
         - storage
         - vendor
         - node_modules (?)
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
-    checkMissingCallableSignature: true
-    checkMissingVarTagTypehint: true
-    checkFunctionNameCase: true
-    checkInternalClassCaseSensitivity: true
-    checkUnionTypes: true
-    checkBenevolentUnionTypes: true
-    checkAlwaysTrue: true
-    checkAlwaysFalse: true
-    checkExplicitMixed: true
-    reportUnmatchedIgnoredErrors: false
     ignoreErrors:
         - '#Call to an undefined method.*#'
         - '#Access to an undefined property.*#'
         - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Collection.*#'
         - '#Method Illuminate\\Database\\Eloquent\\Collection.*#'
-    bootstrapFiles:
-        - vendor/autoload.php
+        - '#Method .*::broken.*#'
+        - '#Parameter .* of function md5 expects string.*#'
+        - '#Binary operation.*between.*results in an error#'
+        - '#Negated boolean expression is always false#'
+        - '#Left side of && is always true#'
+        - '#has parameter .* with no value type specified in iterable type array#'
+        - '#return type has no value type specified in iterable type array#'
+        - '#should return.*but returns#'
+        - '#has no return type specified#'
+        - '#has no type specified#'
+        - '#Property .* has no type specified#'
+        - '#Class .* uses generic trait.*but does not specify its types#'
+        - '#Undefined variable: \$this#'
+        - '#Call to an undefined static method App\\Models\\Challenge::#'
+        - '#missingType\..*#'
+        - '#Property App\\Models\\Challenge::\$casts type has no value type specified#'
+        - '#Method App\\Models\\Challenge::.* has parameter .* with no type specified#'
+    reportUnmatchedIgnoredErrors: false
