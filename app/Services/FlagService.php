@@ -56,6 +56,14 @@ class FlagService
             return str_repeat('*', $length);
         }
         
+        // For flags that start with FLAG_, keep the FLAG_ prefix
+        if (strpos($flag, 'FLAG_') === 0) {
+            $start = 'FLAG_';
+            $end = substr($flag, -3);
+            $middle = str_repeat('*', $length - strlen($start) - strlen($end));
+            return $start . $middle . $end;
+        }
+        
         $start = substr($flag, 0, 3);
         $end = substr($flag, -3);
         $middle = str_repeat('*', $length - 6);

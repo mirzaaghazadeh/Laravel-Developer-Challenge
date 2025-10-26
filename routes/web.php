@@ -40,3 +40,8 @@ Route::post('/level3/testing', [Level3Controller::class, 'testingChallenge']);
 Route::get('/level3/query-builder', [Level3Controller::class, 'queryBuilderChallenge']);
 Route::post('/level3/middleware-pipeline', [Level3Controller::class, 'middlewarePipelineChallenge']);
 Route::post('/level3/submit-flag', [Level3Controller::class, 'submitFlag']);
+
+// Progress API routes
+Route::get('/api/progress', [App\Http\Controllers\API\ProgressController::class, 'getProgress']);
+Route::post('/api/progress/update', [App\Http\Controllers\API\ProgressController::class, 'updateProgress']);
+Route::post('/api/progress/reset', [App\Http\Controllers\API\ProgressController::class, 'resetProgress']);

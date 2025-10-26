@@ -5,6 +5,7 @@ namespace App\Challenges\Level3;
 use Illuminate\Support\Facades\Queue;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\DB;
 use App\Jobs\ProcessDataJob;
 use App\Events\DataProcessedEvent;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,13 +27,15 @@ class AdvancedLaravelChallenge
             return [
                 'success' => true,
                 'message' => 'Job processed',
+                'data' => $data,
                 'flag' => 'FLAG_3_QUEUE_' . substr(md5(json_encode($data)), 0, 8)
             ];
         } catch (\Exception $e) {
             return [
                 'success' => false,
                 'error' => $e->getMessage(),
-                'hint' => 'Jobs should be queued, not processed immediately'
+                'hint' => 'Jobs should be queued, not processed immediately',
+                'data' => $data
             ];
         }
     }
@@ -61,6 +64,10 @@ class AdvancedLaravelChallenge
             return [
                 'success' => true,
                 'message' => 'Event system working',
+                'result' => [
+                    'event_fired' => $eventFired,
+                    'listener_executed' => $listenerExecuted
+                ],
                 'flag' => 'FLAG_3_EVENT_' . substr(md5(json_encode($payload)), 0, 8)
             ];
         }
@@ -98,14 +105,18 @@ class AdvancedLaravelChallenge
         $totalScore = $result->sum('score');
         $avgScore = $result->avg('score');
         
+        $stats = [
+            'total_score' => $totalScore,
+            'average_score' => $avgScore,
+            'count' => $result->count()
+        ];
+        
         if ($result->count() >= 3 && $avgScore > 50) {
             return [
                 'success' => true,
-                'result' => $result->toArray(),
-                'stats' => [
-                    'total_score' => $totalScore,
-                    'average_score' => $avgScore,
-                    'count' => $result->count()
+                'result' => [
+                    'data' => $result->toArray(),
+                    'stats' => $stats
                 ],
                 'flag' => 'FLAG_3_COLLECTION_' . substr(md5($totalScore), 0, 8)
             ];
@@ -113,7 +124,10 @@ class AdvancedLaravelChallenge
         
         return [
             'success' => false,
-            'result' => $result->toArray(),
+            'result' => [
+                'data' => $result->toArray(),
+                'stats' => $stats
+            ],
             'hint' => 'Need at least 3 active items with average score > 50'
         ];
     }
@@ -143,7 +157,9 @@ class AdvancedLaravelChallenge
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'error' => $e->getMessage(),
+                'result' => [
+                    'error' => $e->getMessage()
+                ],
                 'hint' => 'Check if the service is properly registered in the container'
             ];
         }
@@ -191,7 +207,9 @@ class AdvancedLaravelChallenge
         
         return [
             'success' => false,
-            'tests' => $results,
+            'result' => [
+                'tests' => $results
+            ],
             'hint' => 'All tests must pass to get the flag'
         ];
     }
@@ -230,7 +248,9 @@ class AdvancedLaravelChallenge
             
             return [
                 'success' => false,
-                'results' => $results,
+                'result' => [
+                    'error' => 'No results found'
+                ],
                 'hint' => 'Query should return users with posts and their average comment ratings'
             ];
         } catch (\Exception $e) {
@@ -259,6 +279,23 @@ class AdvancedLaravelChallenge
             'validation' => function($req) {
                 return isset($req['data']) ? $req : null;
             },
+            'sanitization' => function($req) {
+                // Sanitize input data
+                if (isset($req['data'])) {
+                    $req['data'] = array_map('trim', (array)$req['data']);
+                }
+                return $req;
+            },
+            'rate_limiting' => function($req) {
+                // Simulate rate limiting check
+                $req['rate_limited'] = false;
+                return $req;
+            },
+            'logging' => function($req) {
+                // Log the request
+                $req['logged'] = true;
+                return $req;
+            },
             'processing' => function($req) {
                 $req['processed'] = true;
                 $req['timestamp'] = now()->timestamp;
@@ -285,8 +322,10 @@ class AdvancedLaravelChallenge
         
         return [
             'success' => true,
-            'result' => $result,
-            'executed' => $executed,
+            'result' => [
+                'data' => $result,
+                'executed' => $executed
+            ],
             'flag' => 'FLAG_3_MIDDLEWARE_' . substr(md5(implode(',', $executed)), 0, 8)
         ];
     }

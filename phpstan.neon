@@ -1,0 +1,32 @@
+parameters:
+    level: 6
+    paths:
+        - app
+        - config
+        - database/factories
+        - database/seeders
+        - routes
+    excludePaths:
+        - bootstrap/cache
+        - storage
+        - vendor
+        - node_modules (?)
+    checkMissingIterableValueType: false
+    checkGenericClassInNonGenericObjectType: false
+    checkMissingCallableSignature: true
+    checkMissingVarTagTypehint: true
+    checkFunctionNameCase: true
+    checkInternalClassCaseSensitivity: true
+    checkUnionTypes: true
+    checkBenevolentUnionTypes: true
+    checkAlwaysTrue: true
+    checkAlwaysFalse: true
+    checkExplicitMixed: true
+    reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        - '#Call to an undefined method.*#'
+        - '#Access to an undefined property.*#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Collection.*#'
+        - '#Method Illuminate\\Database\\Eloquent\\Collection.*#'
+    bootstrapFiles:
+        - vendor/autoload.php

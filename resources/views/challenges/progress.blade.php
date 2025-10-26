@@ -12,19 +12,19 @@
             <h2 class="text-xl font-semibold text-blue-800 mb-4">Overall Statistics</h2>
             <div class="grid md:grid-cols-4 gap-4">
                 <div class="text-center">
-                    <div class="text-2xl font-bold text-blue-600">{{ $total_challenges }}</div>
+                    <div class="text-2xl font-bold text-blue-600" id="total-challenges">{{ $total_challenges }}</div>
                     <div class="text-sm text-blue-700">Total Challenges</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-2xl font-bold text-green-600">0</div>
+                    <div class="text-2xl font-bold text-green-600" id="completed-count">0</div>
                     <div class="text-sm text-green-700">Completed</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-2xl font-bold text-yellow-600">0</div>
+                    <div class="text-2xl font-bold text-yellow-600" id="in-progress-count">0</div>
                     <div class="text-sm text-yellow-700">In Progress</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-2xl font-bold text-red-600">{{ $total_challenges }}</div>
+                    <div class="text-2xl font-bold text-red-600" id="remaining-count">{{ $total_challenges }}</div>
                     <div class="text-sm text-red-700">Remaining</div>
                 </div>
             </div>
@@ -70,28 +70,28 @@
                 <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
                     <div class="bg-yellow-600 h-3 rounded-full" style="width: 0%"></div>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-3" id="level2-challenges">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="5">
                         <div class="text-xs text-gray-600">API Validation</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="6">
                         <div class="text-xs text-gray-600">Database Query</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="7">
                         <div class="text-xs text-gray-600">Cache Strategy</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="8">
                         <div class="text-xs text-gray-600">API Response</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="9">
                         <div class="text-xs text-gray-600">Relationship Query</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="10">
                         <div class="text-xs text-gray-600">Middleware Security</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
@@ -107,32 +107,32 @@
                 <div class="w-full bg-gray-200 rounded-full h-3 mb-4">
                     <div class="bg-red-600 h-3 rounded-full" style="width: 0%"></div>
                 </div>
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="level3-challenges">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="11">
                         <div class="text-xs text-gray-600">Queue Job</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="12">
                         <div class="text-xs text-gray-600">Event System</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="13">
                         <div class="text-xs text-gray-600">Collections</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="14">
                         <div class="text-xs text-gray-600">Service Container</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="15">
                         <div class="text-xs text-gray-600">Testing</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="16">
                         <div class="text-xs text-gray-600">Query Builder</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
-                    <div class="text-center p-3 bg-gray-100 rounded">
+                    <div class="text-center p-3 bg-gray-100 rounded" data-challenge="17">
                         <div class="text-xs text-gray-600">Middleware Pipeline</div>
                         <div class="text-sm font-medium">❌</div>
                     </div>
@@ -146,7 +146,7 @@
             <div class="grid md:grid-cols-3 gap-4">
                 <div>
                     <h4 class="font-medium text-yellow-700 mb-2">Level 1 Flags</h4>
-                    <div class="space-y-1">
+                    <div class="space-y-1" id="found-flags">
                         <div class="text-sm text-yellow-600">FLAG_1_ARRAY_FIX_????????</div>
                         <div class="text-sm text-yellow-600">FLAG_1_STRING_????????</div>
                         <div class="text-sm text-yellow-600">FLAG_1_FACTORIAL_????????</div>
@@ -245,3 +245,84 @@ setInterval(() => {
 }, 1000);
 </script>
 @endsection
+// Load and display progress
+function loadProgress() {
+    axios.get('/api/progress')
+        .then(response => {
+            const progress = response.data;
+            updateProgressDisplay(progress);
+        })
+        .catch(error => {
+            console.error('Error loading progress:', error);
+        });
+}
+
+// Update progress display
+function updateProgressDisplay(progress) {
+    // Update statistics
+    document.getElementById('completed-count').textContent = progress.total_completed;
+    document.getElementById('remaining-count').textContent = progress.total_challenges - progress.total_completed;
+    
+    // Update level completion status
+    document.getElementById('level1-status').textContent = progress.level1_completed ? '✅' : '❌';
+    document.getElementById('level2-status').textContent = progress.level2_completed ? '✅' : '❌';
+    document.getElementById('level3-status').textContent = progress.level3_completed ? '✅' : '❌';
+    
+    // Update individual challenge status
+    progress.completed_challenges.forEach(challengeId => {
+        const challengeElement = document.querySelector(`[data-challenge="${challengeId}"]`);
+        if (challengeElement) {
+            const statusElement = challengeElement.querySelector('.text-sm.font-medium');
+            if (statusElement) {
+                statusElement.textContent = '✅';
+                challengeElement.classList.add('bg-green-100', 'border-green-300');
+                challengeElement.classList.remove('bg-gray-100');
+            }
+        }
+    });
+    
+    // Update found flags display
+    const flagsContainer = document.getElementById('found-flags');
+    if (flagsContainer && progress.found_flags.length > 0) {
+        flagsContainer.innerHTML = progress.found_flags.map(flag => 
+            `<div class="text-sm text-green-600">${flag}</div>`
+        ).join('');
+    }
+}
+
+// Update progress when flag is submitted
+function updateProgressOnFlagSubmit(challengeId, flag) {
+    axios.post('/api/progress/update', {
+        challenge_id: challengeId,
+        flag: flag
+    })
+    .then(response => {
+        updateProgressDisplay(response.data);
+        showNotification('Progress updated!', 'success');
+    })
+    .catch(error => {
+        console.error('Error updating progress:', error);
+        showNotification('Error updating progress', 'error');
+    });
+}
+
+// Load progress on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadProgress();
+    
+    // Update submit flag functions to also update progress
+    const originalSubmitFlag = window.submitFlag;
+    window.submitFlag = function(challengeId, flag, callback) {
+        originalSubmitFlag(challengeId, flag, function(response) {
+            if (callback) callback(response);
+            else {
+                if (response.success) {
+                    showNotification('Flag submitted successfully!', 'success');
+                    updateProgressOnFlagSubmit(challengeId, flag);
+                } else {
+                    showNotification('Incorrect flag. Keep trying!', 'error');
+                }
+            }
+        });
+    };
+});

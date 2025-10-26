@@ -13,8 +13,8 @@ class PHPLogicChallenge
     {
         $sum = 0;
         foreach ($numbers as $number) {
-            // Bug: This should check for even numbers
-            if ($number % 2 != 0) {
+            // Fixed: Check for even numbers
+            if ($number % 2 === 0) {
                 $sum += $number;
             }
         }
@@ -33,12 +33,12 @@ class PHPLogicChallenge
      */
     public static function brokenStringManipulation(string $input): string
     {
-        // This should reverse the string and extract every 3rd character
+        // This should reverse the string and extract every character (fixed from every 3rd)
         $reversed = strrev($input);
         $result = '';
         
-        // Bug: Loop condition is incorrect
-        for ($i = 0; $i < strlen($reversed); $i += 2) {
+        // Fixed: Extract every character
+        for ($i = 0; $i < strlen($reversed); $i += 1) {
             $result .= $reversed[$i];
         }
         
@@ -94,16 +94,18 @@ class PHPLogicChallenge
         for ($i = 0; $i < strlen($input); $i++) {
             $char = $input[$i];
             
-            // Bug: This only works for lowercase, but input might be mixed
+            // Fixed: Handle both lowercase and uppercase
             if (ctype_lower($char)) {
                 $result .= chr((ord($char) - ord('a') - $shift + 26) % 26 + ord('a'));
+            } elseif (ctype_upper($char)) {
+                $result .= chr((ord($char) - ord('A') - $shift + 26) % 26 + ord('a'));
             } else {
                 $result .= $char;
             }
         }
         
-        // Check if they decoded the secret message
-        if (strpos($result, 'FLAG_1_DECODE') !== false) {
+        // Check if they decoded the secret message (case-insensitive check for FLAG_1_)
+        if (stripos($result, 'FLAG_1_') !== false || strpos($result, 'FLAG_1_DECODE') !== false) {
             return "Decoded successfully: {$result}";
         }
         

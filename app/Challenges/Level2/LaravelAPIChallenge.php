@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class LaravelAPIChallenge
 {
@@ -25,7 +26,7 @@ class LaravelAPIChallenge
         if ($validator->fails()) {
             return [
                 'success' => false,
-                'errors' => $validator->errors(),
+                'errors' => $validator->errors()->toArray(),
                 'flag' => null
             ];
         }
@@ -34,6 +35,7 @@ class LaravelAPIChallenge
         return [
             'success' => true,
             'message' => 'Validation passed!',
+            'errors' => [], // Include empty errors array for consistent structure
             'flag' => 'FLAG_2_VALIDATION_' . substr(md5(json_encode($data)), 0, 8)
         ];
     }
@@ -82,7 +84,7 @@ class LaravelAPIChallenge
             // Simulate expensive operation
             $data = [
                 'timestamp' => now()->timestamp,
-                'random_data' => str_random(10),
+                'random_data' => Str::random(10),
                 'processed_at' => now()->toISOString()
             ];
             

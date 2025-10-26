@@ -40,6 +40,9 @@
     <footer class="bg-gray-800 text-white py-6 mt-12">
         <div class="container mx-auto px-4 text-center">
             <p>Laravel Developer Challenge - Test Your Skills</p>
+            <p class="text-sm text-gray-400 mt-2">
+                Created by <a href="https://github.com/mirzaaghazadeh" target="_blank" class="text-blue-400 hover:text-blue-300">Navid Mirzaaghazadeh</a>
+            </p>
         </div>
     </footer>
 
@@ -52,10 +55,20 @@
             })
             .then(response => {
                 if (callback) callback(response.data);
+                else {
+                    if (response.data.success) {
+                        showNotification('Flag submitted successfully!', 'success');
+                    } else {
+                        showNotification('Incorrect flag. Keep trying!', 'error');
+                    }
+                }
             })
             .catch(error => {
                 console.error('Flag submission error:', error);
                 if (callback) callback({ success: false, message: 'Error submitting flag' });
+                else {
+                    showNotification('Error submitting flag', 'error');
+                }
             });
         }
 

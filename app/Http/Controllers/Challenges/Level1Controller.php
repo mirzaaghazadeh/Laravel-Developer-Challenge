@@ -76,7 +76,7 @@ class Level1Controller extends Controller
             
             return response()->json([
                 'n' => $n,
-                'user_answer' => $userAnswer,
+                'answer' => $userAnswer,
                 'result' => $result
             ]);
         }

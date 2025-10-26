@@ -38,7 +38,7 @@ class ProcessDataJob implements ShouldQueue
         
         // Add processing metadata
         $this->data['processed_at'] = now()->toISOString();
-        $this->data['job_id'] = $this->job->getJobId();
+        $this->data['job_id'] = $this->job ? $this->job->getJobId() : null;
         
         Log::info('Data processed successfully', ['result' => $this->data]);
     }
