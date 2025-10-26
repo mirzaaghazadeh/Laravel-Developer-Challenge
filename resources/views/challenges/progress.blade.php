@@ -146,34 +146,34 @@
             <div class="grid md:grid-cols-3 gap-4">
                 <div>
                     <h4 class="font-medium text-yellow-700 mb-2">Level 1 Flags</h4>
-                    <div class="space-y-1" id="found-flags">
-                        <div class="text-sm text-yellow-600">FLAG_1_ARRAY_FIX_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_1_STRING_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_1_FACTORIAL_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_1_DECODE_????????</div>
+                    <div class="space-y-1" id="level1-flags">
+                        <div class="text-sm text-gray-500" data-flag-id="1">❌ FLAG_1_ARRAY_FIX_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="2">❌ FLAG_1_STRING_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="3">❌ FLAG_1_FACTORIAL_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="4">❌ FLAG_1_DECODE_????????</div>
                     </div>
                 </div>
                 <div>
                     <h4 class="font-medium text-yellow-700 mb-2">Level 2 Flags</h4>
-                    <div class="space-y-1">
-                        <div class="text-sm text-yellow-600">FLAG_2_VALIDATION_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_2_DATABASE_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_2_CACHE_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_2_API_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_2_RELATIONSHIP_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_2_SECURITY_????????</div>
+                    <div class="space-y-1" id="level2-flags">
+                        <div class="text-sm text-gray-500" data-flag-id="5">❌ FLAG_2_VALIDATION_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="6">❌ FLAG_2_DATABASE_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="7">❌ FLAG_2_CACHE_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="8">❌ FLAG_2_API_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="9">❌ FLAG_2_RELATIONSHIP_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="10">❌ FLAG_2_SECURITY_????????</div>
                     </div>
                 </div>
                 <div>
                     <h4 class="font-medium text-yellow-700 mb-2">Level 3 Flags</h4>
-                    <div class="space-y-1">
-                        <div class="text-sm text-yellow-600">FLAG_3_QUEUE_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_3_EVENT_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_3_COLLECTION_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_3_CONTAINER_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_3_TESTING_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_3_QUERY_????????</div>
-                        <div class="text-sm text-yellow-600">FLAG_3_MIDDLEWARE_????????</div>
+                    <div class="space-y-1" id="level3-flags">
+                        <div class="text-sm text-gray-500" data-flag-id="11">❌ FLAG_3_QUEUE_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="12">❌ FLAG_3_EVENT_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="13">❌ FLAG_3_COLLECTION_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="14">❌ FLAG_3_CONTAINER_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="15">❌ FLAG_3_TESTING_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="16">❌ FLAG_3_QUERY_????????</div>
+                        <div class="text-sm text-gray-500" data-flag-id="17">❌ FLAG_3_MIDDLEWARE_????????</div>
                     </div>
                 </div>
             </div>
@@ -242,13 +242,23 @@ function updateProgressDisplay(progress) {
     });
     
     // Update found flags display
-    const flagsContainer = document.getElementById('found-flags');
-    if (flagsContainer && progress.found_flags && progress.found_flags.length > 0) {
-        const level1Flags = progress.found_flags.filter(f => f.includes('FLAG_1_'));
-        if (level1Flags.length > 0) {
-            flagsContainer.innerHTML = level1Flags.map(flag => 
-                `<div class="text-sm text-green-600 font-mono">${flag}</div>`
-            ).join('');
+    if (progress.found_flags && progress.found_flags.length > 0) {
+        // Create a mapping of challenge ID to flag
+        const challengeFlagMap = {};
+        progress.completed_challenges.forEach((challengeId, index) => {
+            if (progress.found_flags[index]) {
+                challengeFlagMap[challengeId] = progress.found_flags[index];
+            }
+        });
+        
+        // Update each flag element
+        for (const [challengeId, flag] of Object.entries(challengeFlagMap)) {
+            const flagElement = document.querySelector(`[data-flag-id="${challengeId}"]`);
+            if (flagElement) {
+                flagElement.textContent = `✅ ${flag}`;
+                flagElement.classList.remove('text-gray-500');
+                flagElement.classList.add('text-green-600', 'font-mono', 'font-semibold');
+            }
         }
     }
 }

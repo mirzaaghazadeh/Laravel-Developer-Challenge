@@ -43,7 +43,7 @@ class Level1Controller extends Controller
      */
     public function stringChallenge(Request $request)
     {
-        $input = $request->input('input', 'GNIDOC_1_GALF_3_2_1');
+        $input = $request->input('input', '__G__N__I__R__T__S_____1_____G__A__L__F');
         $result = PHPLogicChallenge::brokenStringManipulation($input);
 
         if (strpos($result, 'FLAG_1_') !== false) {
@@ -94,7 +94,7 @@ class Level1Controller extends Controller
      */
     public function decodeChallenge(Request $request)
     {
-        $input = $request->input('input', 'iodj_ghfrgh_iodj');
+        $input = $request->input('input', 'IODJ_1_GHFRGH');
         $result = PHPLogicChallenge::obfuscatedCodeChallenge($input);
 
         if (strpos($result, 'FLAG_1_') !== false) {

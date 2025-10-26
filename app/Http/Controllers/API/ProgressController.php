@@ -23,9 +23,45 @@ class ProgressController extends Controller
             'level3_completed' => false,
             'total_completed' => 0,
             'total_challenges' => 17,
+            'hints_requested' => 0,
+            'hints_per_challenge' => [],
         ]);
 
         return response()->json($progress);
+    }
+
+    /**
+     * Track hint request
+     */
+    public function trackHint(Request $request)
+    {
+        $challengeId = $request->input('challenge_id');
+
+        $progress = Cache::get('challenge_progress', [
+            'completed_challenges' => [],
+            'found_flags' => [],
+            'level1_completed' => false,
+            'level2_completed' => false,
+            'level3_completed' => false,
+            'total_completed' => 0,
+            'total_challenges' => 17,
+            'hints_requested' => 0,
+            'hints_per_challenge' => [],
+        ]);
+
+        // Track hint only if not already tracked for this challenge
+        if (!isset($progress['hints_per_challenge'][$challengeId])) {
+            $progress['hints_requested'] = ($progress['hints_requested'] ?? 0) + 1;
+            $progress['hints_per_challenge'][$challengeId] = true;
+
+            Cache::put('challenge_progress', $progress, 3600); // Store for 1 hour
+        }
+
+        return response()->json([
+            'success' => true,
+            'hints_requested' => $progress['hints_requested'],
+            'message' => 'Hint tracked successfully'
+        ]);
     }
 
     /**
@@ -44,6 +80,8 @@ class ProgressController extends Controller
             'level3_completed' => false,
             'total_completed' => 0,
             'total_challenges' => 17,
+            'hints_requested' => 0,
+            'hints_per_challenge' => [],
         ]);
 
         // Add to completed challenges if not already there

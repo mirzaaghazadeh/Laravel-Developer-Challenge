@@ -45,3 +45,4 @@ Route::post('/level3/submit-flag', [Level3Controller::class, 'submitFlag']);
 Route::get('/api/progress', [App\Http\Controllers\API\ProgressController::class, 'getProgress']);
 Route::post('/api/progress/update', [App\Http\Controllers\API\ProgressController::class, 'updateProgress']);
 Route::post('/api/progress/reset', [App\Http\Controllers\API\ProgressController::class, 'resetProgress']);
+Route::post('/api/progress/hint', [App\Http\Controllers\API\ProgressController::class, 'trackHint']);

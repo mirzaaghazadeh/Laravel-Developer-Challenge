@@ -115,11 +115,11 @@ class LaravelAPIChallenge
         $total = count($items);
         $lastPage = ceil($total / $perPage);
 
-        // Bug: Incorrect pagination logic
-        $offset = ($page - 1) * $perPage;
+        // Bug: Incorrect pagination logic - should be ($page - 1) * $perPage
+        $offset = $page * $perPage;
         $paginatedItems = array_slice($items, $offset, $perPage);
 
-        // Bug: Missing proper API response structure
+        // Bug: Missing from and to in pagination
         $response = [
             'data' => $paginatedItems,
             'pagination' => [
@@ -130,8 +130,11 @@ class LaravelAPIChallenge
             ],
         ];
 
-        // Hidden flag when pagination is correct
-        if (count($paginatedItems) <= $perPage && $page <= $lastPage) {
+        // Hidden flag when pagination is correct (proper offset and has from/to)
+        $correctOffset = ($page - 1) * $perPage;
+        $hasFromTo = isset($response['pagination']['from']) && isset($response['pagination']['to']);
+        
+        if ($offset === $correctOffset && $hasFromTo && count($paginatedItems) > 0) {
             $response['flag'] = 'FLAG_2_API_'.substr(md5(json_encode($response['pagination'])), 0, 8);
         }
 

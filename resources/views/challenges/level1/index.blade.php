@@ -13,6 +13,13 @@
             <div class="border rounded-lg p-6">
                 <h3 class="text-xl font-semibold mb-3">Challenge 1: Array Function</h3>
                 <p class="text-gray-600 mb-4">Fix the broken array function that should sum even numbers.</p>
+                <button onclick="toggleHint(1)" class="text-blue-600 hover:text-blue-800 text-sm font-medium mb-3">
+                    🤔 Need Help? Click to show hint
+                </button>
+                <div id="hint-1" class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3 hidden">
+                    <p class="text-sm text-blue-800">📁 <strong>File to fix:</strong> <code class="bg-blue-100 px-2 py-1 rounded">app/Challenges/Level1/PHPLogicChallenge.php</code></p>
+                    <p class="text-xs text-blue-600 mt-1">Look for: <code>brokenArrayFunction()</code> method</p>
+                </div>
                 
                 <div class="bg-gray-100 p-4 rounded mb-4">
                     <code class="text-sm">
@@ -42,6 +49,13 @@
             <div class="border rounded-lg p-6">
                 <h3 class="text-xl font-semibold mb-3">Challenge 2: String Manipulation</h3>
                 <p class="text-gray-600 mb-4">Fix the string manipulation to extract the hidden message.</p>
+                <button onclick="toggleHint(2)" class="text-blue-600 hover:text-blue-800 text-sm font-medium mb-3">
+                    🤔 Need Help? Click to show hint
+                </button>
+                <div id="hint-2" class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3 hidden">
+                    <p class="text-sm text-blue-800">📁 <strong>File to fix:</strong> <code class="bg-blue-100 px-2 py-1 rounded">app/Challenges/Level1/PHPLogicChallenge.php</code></p>
+                    <p class="text-xs text-blue-600 mt-1">Look for: <code>brokenStringManipulation()</code> method</p>
+                </div>
                 
                 <div class="bg-gray-100 p-4 rounded mb-4">
                     <code class="text-sm">
@@ -58,7 +72,7 @@
 
                 <div class="space-y-3">
                     <input type="text" id="stringInput" class="w-full border rounded px-3 py-2" 
-                           placeholder="Enter string to decode" value="GNIDOC_1_GALF_3_2_1">
+                           placeholder="Enter string to decode" value="__G__N__I__R__T__S_____1_____G__A__L__F">
                     <button onclick="testStringChallenge()" class="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                         Test Function
                     </button>
@@ -70,6 +84,13 @@
             <div class="border rounded-lg p-6">
                 <h3 class="text-xl font-semibold mb-3">Challenge 3: Factorial Function</h3>
                 <p class="text-gray-600 mb-4">Calculate factorial correctly and submit your answer.</p>
+                <button onclick="toggleHint(3)" class="text-blue-600 hover:text-blue-800 text-sm font-medium mb-3">
+                    🤔 Need Help? Click to show hint
+                </button>
+                <div id="hint-3" class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3 hidden">
+                    <p class="text-sm text-blue-800">📁 <strong>File to fix:</strong> <code class="bg-blue-100 px-2 py-1 rounded">app/Challenges/Level1/PHPLogicChallenge.php</code></p>
+                    <p class="text-xs text-blue-600 mt-1">Look for: <code>brokenFactorial()</code> method</p>
+                </div>
                 
                 <div class="bg-gray-100 p-4 rounded mb-4">
                     <code class="text-sm">
@@ -98,6 +119,13 @@
             <div class="border rounded-lg p-6">
                 <h3 class="text-xl font-semibold mb-3">Challenge 4: Caesar Cipher</h3>
                 <p class="text-gray-600 mb-4">Fix the Caesar cipher decoder to reveal the hidden message.</p>
+                <button onclick="toggleHint(4)" class="text-blue-600 hover:text-blue-800 text-sm font-medium mb-3">
+                    🤔 Need Help? Click to show hint
+                </button>
+                <div id="hint-4" class="bg-blue-50 border-l-4 border-blue-500 p-3 mb-3 hidden">
+                    <p class="text-sm text-blue-800">📁 <strong>File to fix:</strong> <code class="bg-blue-100 px-2 py-1 rounded">app/Challenges/Level1/PHPLogicChallenge.php</code></p>
+                    <p class="text-xs text-blue-600 mt-1">Look for: <code>obfuscatedCodeChallenge()</code> method</p>
+                </div>
                 
                 <div class="bg-gray-100 p-4 rounded mb-4">
                     <code class="text-sm">
@@ -112,7 +140,7 @@
 
                 <div class="space-y-3">
                     <input type="text" id="decodeInput" class="w-full border rounded px-3 py-2" 
-                           placeholder="Enter encoded text" value="iodj_ghfrgh_iodj">
+                           placeholder="Enter encoded text" value="IODJ_1_GHFRGH">
                     <button onclick="testDecodeChallenge()" class="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">
                         Decode
                     </button>
@@ -121,27 +149,102 @@
             </div>
         </div>
 
-        <!-- Flag Submission -->
-        <div class="mt-8 border-t pt-6">
-            <h3 class="text-xl font-semibold mb-4">Submit Flags</h3>
-            <div class="grid md:grid-cols-2 gap-4">
-                <div>
-                    <input type="text" id="flagInput" class="w-full border rounded px-3 py-2" 
-                           placeholder="Enter your flag (e.g., FLAG_1_...)">
-                    <button onclick="submitFlag(1, document.getElementById('flagInput').value)" 
-                            class="mt-2 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-                        Submit Flag
-                    </button>
+        <!-- Overall Statistics -->
+        <div class="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
+            <h3 class="text-xl font-semibold text-blue-800 mb-4">📊 Overall Statistics</h3>
+            <div class="grid md:grid-cols-5 gap-4">
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-blue-600" id="stats-completed">0/17</div>
+                    <div class="text-sm text-blue-700">Completed</div>
                 </div>
-                <div class="bg-yellow-50 border border-yellow-200 rounded p-4">
-                    <p class="text-sm text-yellow-800">
-                        <strong>Hint:</strong> Flags will appear in the challenge results when you solve them correctly!
-                    </p>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-green-600" id="stats-level1">0/4</div>
+                    <div class="text-sm text-green-700">Level 1</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-yellow-600" id="stats-level2">0/6</div>
+                    <div class="text-sm text-yellow-700">Level 2</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-red-600" id="stats-level3">0/7</div>
+                    <div class="text-sm text-red-700">Level 3</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold text-purple-600" id="stats-hints">0</div>
+                    <div class="text-sm text-purple-700">💡 Hints Used</div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <div class="flex justify-between text-sm mb-1">
+                    <span class="text-blue-700">Overall Progress</span>
+                    <span class="text-blue-700" id="stats-percentage">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-3">
+                    <div class="bg-blue-600 h-3 rounded-full transition-all duration-500" id="stats-progress-bar" style="width: 0%"></div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+// Load and display progress statistics
+function loadProgressStats() {
+    axios.get('/api/progress')
+        .then(response => {
+            const progress = response.data;
+            updateStatsDisplay(progress);
+        })
+        .catch(error => {
+            console.error('Error loading progress:', error);
+        });
+}
+
+// Update statistics display
+function updateStatsDisplay(progress) {
+    const level1Count = progress.completed_challenges.filter(id => id >= 1 && id <= 4).length;
+    const level2Count = progress.completed_challenges.filter(id => id >= 5 && id <= 10).length;
+    const level3Count = progress.completed_challenges.filter(id => id >= 11 && id <= 17).length;
+    const totalPercentage = Math.round((progress.total_completed / progress.total_challenges) * 100);
+    
+    document.getElementById('stats-completed').textContent = `${progress.total_completed}/17`;
+    document.getElementById('stats-level1').textContent = `${level1Count}/4`;
+    document.getElementById('stats-level2').textContent = `${level2Count}/6`;
+    document.getElementById('stats-level3').textContent = `${level3Count}/7`;
+    document.getElementById('stats-hints').textContent = `${progress.hints_requested || 0}`;
+    document.getElementById('stats-percentage').textContent = `${totalPercentage}%`;
+    document.getElementById('stats-progress-bar').style.width = `${totalPercentage}%`;
+}
+
+// Initialize stats on page load
+document.addEventListener('DOMContentLoaded', function() {
+    loadProgressStats();
+    // Refresh stats every 3 seconds
+    setInterval(loadProgressStats, 3000);
+});
+
+// Toggle hint visibility and track usage
+function toggleHint(challengeId) {
+    const hintElement = document.getElementById('hint-' + challengeId);
+    const isHidden = hintElement.classList.contains('hidden');
+    
+    if (isHidden) {
+        hintElement.classList.remove('hidden');
+        // Track hint request
+        axios.post('/api/progress/hint', { challenge_id: challengeId })
+            .then(response => {
+                console.log('Hint tracked:', response.data);
+                // Refresh stats to show updated hint count
+                loadProgressStats();
+            })
+            .catch(error => {
+                console.error('Error tracking hint:', error);
+            });
+    } else {
+        hintElement.classList.add('hidden');
+    }
+}
+</script>
 
 <script>
 function testArrayChallenge() {
@@ -159,6 +262,8 @@ function testArrayChallenge() {
             if (response.data.result.includes('FLAG_1_')) {
                 result.classList.add('flag-found', 'text-green-600');
                 showNotification('Flag found in array challenge!', 'success');
+                // Automatically update progress
+                submitFlag(1, response.data.result);
             }
         })
         .catch(error => {
@@ -180,6 +285,8 @@ function testStringChallenge() {
             if (response.data.result.includes('FLAG_1_')) {
                 result.classList.add('flag-found', 'text-green-600');
                 showNotification('Flag found in string challenge!', 'success');
+                // Automatically update progress
+                submitFlag(2, response.data.result);
             }
         })
         .catch(error => {
@@ -199,6 +306,8 @@ function testFactorialChallenge() {
             if (response.data.result.includes('FLAG_1_')) {
                 result.classList.add('flag-found', 'text-green-600');
                 showNotification('Flag found in factorial challenge!', 'success');
+                // Automatically update progress
+                submitFlag(3, response.data.result);
             }
         })
         .catch(error => {
@@ -220,11 +329,14 @@ function testDecodeChallenge() {
             if (response.data.result.includes('FLAG_1_')) {
                 result.classList.add('flag-found', 'text-green-600');
                 showNotification('Flag found in decode challenge!', 'success');
+                // Automatically update progress
+                submitFlag(4, response.data.result);
             }
         })
         .catch(error => {
             document.getElementById('decodeResult').innerHTML = 'Error: ' + error.message;
         });
 }
+
 </script>
 @endsection

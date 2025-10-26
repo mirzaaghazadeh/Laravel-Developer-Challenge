@@ -47,9 +47,29 @@
     </footer>
 
     <script>
+        // Convert global challenge ID to level-specific format
+        function getChallengeInfo(challengeId) {
+            let level, localChallenge;
+            
+            if (challengeId <= 4) {
+                level = 1;
+                localChallenge = challengeId;
+            } else if (challengeId <= 10) {
+                level = 2;
+                localChallenge = challengeId - 4;
+            } else {
+                level = 3;
+                localChallenge = challengeId - 10;
+            }
+            
+            return { level, localChallenge };
+        }
+        
         // Global flag submission handler
         function submitFlag(challengeId, flag, callback) {
-            axios.post('/level' + Math.ceil(challengeId / 4) + '/submit-flag', {
+            const { level, localChallenge } = getChallengeInfo(challengeId);
+            
+            axios.post('/level' + level + '/submit-flag', {
                 challenge_id: challengeId,
                 flag: flag
             })
@@ -57,7 +77,8 @@
                 if (callback) callback(response.data);
                 else {
                     if (response.data.success) {
-                        showNotification('Flag submitted successfully!', 'success');
+                        showNotification(`✅ Level ${level} - Challenge ${localChallenge} completed!`, 'success');
+                        console.log('Progress updated:', response.data);
                     } else {
                         showNotification('Incorrect flag. Keep trying!', 'error');
                     }
