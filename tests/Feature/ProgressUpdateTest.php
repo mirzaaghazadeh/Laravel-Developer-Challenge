@@ -181,4 +181,3 @@ class ProgressUpdateTest extends TestCase
         $this->assertEquals(4, $progress['total_completed']);
     }
 }
-

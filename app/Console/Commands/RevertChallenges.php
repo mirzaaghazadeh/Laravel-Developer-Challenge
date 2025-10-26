@@ -52,16 +52,16 @@ class RevertChallenges extends Command
 
         // Revert 1: brokenArrayFunction - back to checking odd numbers
         $content = str_replace(
-            "if (\$number % 2 === 0) {",
-            "if (\$number % 2 != 0) {",
+            'if ($number % 2 === 0) {',
+            'if ($number % 2 != 0) {',
             $content
         );
         $this->line('  ✓ Reverted brokenArrayFunction (back to odd numbers bug)');
 
         // Revert 2: brokenStringManipulation - back to increment by 2
         $content = str_replace(
-            "for (\$i = 0; \$i < strlen(\$reversed); \$i += 3) {",
-            "for (\$i = 0; \$i < strlen(\$reversed); \$i += 2) {",
+            'for ($i = 0; $i < strlen($reversed); $i += 3) {',
+            'for ($i = 0; $i < strlen($reversed); $i += 2) {',
             $content
         );
         $this->line('  ✓ Reverted brokenStringManipulation (back to increment by 2)');
@@ -319,16 +319,16 @@ class RevertChallenges extends Command
         $content = File::get($file);
 
         // Revert 1: brokenQueueJob - back to synchronous processing
-        $new = "        // Fixed: Job is now properly dispatched
+        $new = '        // Fixed: Job is now properly dispatched
         try {
             // Dispatch job to queue
-            ProcessDataJob::dispatch(\$data);";
+            ProcessDataJob::dispatch($data);';
 
-        $old = "        // Bug: Job is not properly dispatched or handled
+        $old = '        // Bug: Job is not properly dispatched or handled
         try {
             // This should be dispatched to queue, not processed synchronously
-            \$job = new ProcessDataJob(\$data);
-            \$job->handle(); // Bug: Processing synchronously instead of queuing";
+            $job = new ProcessDataJob($data);
+            $job->handle(); // Bug: Processing synchronously instead of queuing';
 
         $content = str_replace($new, $old, $content);
         $this->line('  ✓ Reverted brokenQueueJob (back to synchronous processing)');
@@ -472,4 +472,3 @@ class RevertChallenges extends Command
         $this->newLine();
     }
 }
-

@@ -50,7 +50,7 @@ class ProgressController extends Controller
         ]);
 
         // Track hint only if not already tracked for this challenge
-        if (!isset($progress['hints_per_challenge'][$challengeId])) {
+        if (! isset($progress['hints_per_challenge'][$challengeId])) {
             $progress['hints_requested'] = ($progress['hints_requested'] ?? 0) + 1;
             $progress['hints_per_challenge'][$challengeId] = true;
 
@@ -60,7 +60,7 @@ class ProgressController extends Controller
         return response()->json([
             'success' => true,
             'hints_requested' => $progress['hints_requested'],
-            'message' => 'Hint tracked successfully'
+            'message' => 'Hint tracked successfully',
         ]);
     }
 

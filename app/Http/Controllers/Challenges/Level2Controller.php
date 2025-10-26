@@ -154,7 +154,7 @@ class Level2Controller extends Controller
 
         // Update progress if flag is valid
         if ($isValid) {
-            $progressController = new \App\Http\Controllers\API\ProgressController();
+            $progressController = new \App\Http\Controllers\API\ProgressController;
             $progressController->updateProgress($request);
         }
 

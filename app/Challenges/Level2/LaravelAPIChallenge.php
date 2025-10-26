@@ -128,12 +128,16 @@ class LaravelAPIChallenge
                 'total' => $total,
                 'last_page' => $lastPage,
             ],
+            'flag' => null, // Will be set if pagination is correct
         ];
 
         // Hidden flag when pagination is correct (proper offset and has from/to)
+        // @phpstan-ignore-next-line - Intentional challenge logic checks for keys that may not exist
         $correctOffset = ($page - 1) * $perPage;
-        $hasFromTo = isset($response['pagination']['from']) && isset($response['pagination']['to']);
-        
+        // @phpstan-ignore-next-line - Intentional challenge logic checks for keys that may not exist
+        $hasFromTo = array_key_exists('from', $response['pagination']) && array_key_exists('to', $response['pagination']);
+
+        // @phpstan-ignore-next-line - Intentional challenge logic
         if ($offset === $correctOffset && $hasFromTo && count($paginatedItems) > 0) {
             $response['flag'] = 'FLAG_2_API_'.substr(md5(json_encode($response['pagination'])), 0, 8);
         }

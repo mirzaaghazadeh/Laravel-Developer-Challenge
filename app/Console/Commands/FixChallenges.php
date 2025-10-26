@@ -52,16 +52,16 @@ class FixChallenges extends Command
 
         // Fix 1: brokenArrayFunction - should check for even numbers
         $content = str_replace(
-            "if (\$number % 2 != 0) {",
-            "if (\$number % 2 === 0) {",
+            'if ($number % 2 != 0) {',
+            'if ($number % 2 === 0) {',
             $content
         );
         $this->line('  ✓ Fixed brokenArrayFunction (even numbers check)');
 
         // Fix 2: brokenStringManipulation - should increment by 3
         $content = str_replace(
-            "for (\$i = 0; \$i < strlen(\$reversed); \$i += 2) {",
-            "for (\$i = 0; \$i < strlen(\$reversed); \$i += 3) {",
+            'for ($i = 0; $i < strlen($reversed); $i += 2) {',
+            'for ($i = 0; $i < strlen($reversed); $i += 3) {',
             $content
         );
         $this->line('  ✓ Fixed brokenStringManipulation (increment by 3)');
@@ -319,16 +319,16 @@ class FixChallenges extends Command
         $content = File::get($file);
 
         // Fix 1: brokenQueueJob - should dispatch instead of handle
-        $old = "        // Bug: Job is not properly dispatched or handled
+        $old = '        // Bug: Job is not properly dispatched or handled
         try {
             // This should be dispatched to queue, not processed synchronously
-            \$job = new ProcessDataJob(\$data);
-            \$job->handle(); // Bug: Processing synchronously instead of queuing";
+            $job = new ProcessDataJob($data);
+            $job->handle(); // Bug: Processing synchronously instead of queuing';
 
-        $new = "        // Fixed: Job is now properly dispatched
+        $new = '        // Fixed: Job is now properly dispatched
         try {
             // Dispatch job to queue
-            ProcessDataJob::dispatch(\$data);";
+            ProcessDataJob::dispatch($data);';
 
         $content = str_replace($old, $new, $content);
         $this->line('  ✓ Fixed brokenQueueJob (proper dispatch)');
@@ -472,4 +472,3 @@ class FixChallenges extends Command
         $this->newLine();
     }
 }
-
