@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->integer('level');
-            $table->string('encrypted_flag');
+            $table->text('encrypted_flag');
             $table->json('hints')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();
